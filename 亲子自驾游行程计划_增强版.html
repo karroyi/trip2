@@ -1,0 +1,2949 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>亲子自驾游行程计划 - 8天7晚</title>
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(to bottom, #fff7ed, #ffffff, #eff6ff);
+      min-height: 100vh;
+      color: #1f2937;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #f3f4f6;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    
+    .header-content {
+      padding: 12px 16px;
+    }
+    
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .logo-icon {
+      width: 24px;
+      height: 24px;
+      color: #f97316;
+    }
+    
+    .logo-text {
+      font-size: 18px;
+      font-weight: 700;
+      color: #111827;
+    }
+    
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    .badge-orange {
+      background: #fed7aa;
+      color: #c2410c;
+    }
+    
+    .header-subtitle {
+      font-size: 14px;
+      color: #6b7280;
+    }
+    
+    .day-selector-container {
+      padding: 0 8px 8px;
+    }
+    
+    .day-selector {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 8px 0;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    
+    .day-selector::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .day-btn {
+      flex-shrink: 0;
+      padding: 8px 16px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 72px;
+      font-family: inherit;
+    }
+    
+    .day-btn-inactive {
+      background: #f3f4f6;
+      color: #4b5563;
+    }
+    
+    .day-btn-inactive:hover {
+      background: #e5e7eb;
+    }
+    
+    .day-btn-active {
+      background: linear-gradient(135deg, #f97316, #ef4444);
+      color: white;
+      box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+    }
+    
+    .day-btn .day-label {
+      font-size: 11px;
+      font-weight: 500;
+      opacity: 0.8;
+    }
+    
+    .day-btn .day-date {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    
+    .main-content {
+      padding: 16px;
+      padding-bottom: 100px;
+    }
+    
+    .card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+    
+    .day-header-card {
+      background: linear-gradient(135deg, #f97316, #ef4444);
+      color: white;
+      padding: 16px;
+      position: relative;
+    }
+    
+    .day-header-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    
+    .day-badge {
+      background: rgba(255,255,255,0.2);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    .day-date-text {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+    
+    .day-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+    
+    .day-subtitle {
+      font-size: 14px;
+      opacity: 0.9;
+      margin-top: 2px;
+    }
+    
+    .day-weather {
+      position: absolute;
+      right: 16px;
+      top: 16px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+    
+    .route-card {
+      padding: 16px;
+    }
+    
+    .route-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .route-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #dbeafe;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #2563eb;
+    }
+    
+    .route-text {
+      flex: 1;
+    }
+    
+    .route-locations {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+    }
+    
+    .route-arrow {
+      color: #9ca3af;
+    }
+    
+    .route-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+    
+    /* Map Container */
+    .map-container {
+      width: 100%;
+      height: 280px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #e5e7eb;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+    
+    .map-legend {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      z-index: 1000;
+      background: rgba(255,255,255,0.95);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      display: flex;
+      gap: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    
+    .legend-attraction {
+      background: #f97316;
+    }
+    
+    .legend-restaurant {
+      background: #eab308;
+    }
+    
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 4px;
+      margin-bottom: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #111827;
+    }
+    
+    .section-badge {
+      background: #f3f4f6;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #6b7280;
+    }
+    
+    /* Unified Timeline */
+    .unified-timeline {
+      padding: 16px;
+    }
+    
+    .timeline-item {
+      display: flex;
+      gap: 12px;
+      position: relative;
+    }
+    
+    .timeline-item:not(:last-child) {
+      padding-bottom: 16px;
+    }
+    
+    .timeline-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      width: 60px;
+      flex-shrink: 0;
+    }
+    
+    .timeline-time {
+      font-size: 13px;
+      font-weight: 600;
+      color: #4b5563;
+      text-align: right;
+      width: 100%;
+      padding-right: 8px;
+    }
+    
+    .timeline-dot {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 4px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .timeline-dot-departure {
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: white;
+    }
+    
+    .timeline-dot-arrival {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+    }
+    
+    .timeline-dot-attraction {
+      background: linear-gradient(135deg, #f97316, #ef4444);
+      color: white;
+    }
+    
+    .timeline-dot-restaurant {
+      background: linear-gradient(135deg, #fbbf24, #f97316);
+      color: white;
+    }
+    
+    .timeline-dot-hotel {
+      background: linear-gradient(135deg, #a855f7, #7c3aed);
+      color: white;
+    }
+    
+    .timeline-dot-activity {
+      background: linear-gradient(135deg, #06b6d4, #0891b2);
+      color: white;
+    }
+    
+    .timeline-line {
+      position: absolute;
+      top: 44px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      background: #e5e7eb;
+      height: calc(100% - 44px);
+    }
+    
+    .timeline-item:last-child .timeline-line {
+      display: none;
+    }
+    
+    .timeline-content {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    /* Schedule Card */
+    .schedule-card {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+    
+    .schedule-card-clickable {
+      cursor: pointer;
+    }
+    
+    .schedule-card-clickable:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transform: scale(1.01);
+    }
+    
+    .schedule-card-clickable:active {
+      transform: scale(0.99);
+    }
+    
+    .schedule-header {
+      padding: 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    
+    .schedule-image {
+      width: 72px;
+      height: 72px;
+      border-radius: 10px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    
+    .schedule-icon-wrapper {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    
+    .schedule-icon-attraction {
+      background: linear-gradient(135deg, #fff7ed, #ffedd5);
+      color: #f97316;
+    }
+    
+    .schedule-icon-restaurant {
+      background: linear-gradient(135deg, #fefce8, #fef9c3);
+      color: #eab308;
+    }
+    
+    .schedule-icon-hotel {
+      background: linear-gradient(135deg, #faf5ff, #f3e8ff);
+      color: #a855f7;
+    }
+    
+    .schedule-info {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    .schedule-type-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    
+    .badge-attraction {
+      background: #fff7ed;
+      color: #c2410c;
+    }
+    
+    .badge-restaurant {
+      background: #fefce8;
+      color: #a16207;
+    }
+    
+    .badge-hotel {
+      background: #faf5ff;
+      color: #7c3aed;
+    }
+    
+    .badge-departure {
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+    
+    .badge-arrival {
+      background: #f0fdf4;
+      color: #16a34a;
+    }
+    
+    .badge-activity {
+      background: #ecfeff;
+      color: #0891b2;
+    }
+    
+    .schedule-name {
+      font-weight: 600;
+      color: #111827;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+    
+    .schedule-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: #6b7280;
+      flex-wrap: wrap;
+    }
+    
+    .schedule-desc {
+      font-size: 13px;
+      color: #4b5563;
+      margin-top: 6px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    /* Parking Info */
+    .parking-info {
+      margin: 0 12px 12px;
+      padding: 10px 12px;
+      background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+      border-radius: 8px;
+      border: 1px solid #86efac;
+    }
+    
+    .parking-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+    
+    .parking-icon {
+      width: 18px;
+      height: 18px;
+      color: #16a34a;
+    }
+    
+    .parking-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #166534;
+    }
+    
+    .parking-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: #111827;
+      margin-bottom: 4px;
+    }
+    
+    .parking-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 12px;
+      color: #4b5563;
+    }
+    
+    .parking-detail-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .parking-badge {
+      display: inline-flex;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+    
+    .parking-badge-own {
+      background: #dcfce7;
+      color: #166534;
+    }
+    
+    .parking-badge-nearby {
+      background: #fef9c3;
+      color: #854d0e;
+    }
+    
+    .parking-badge-free {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+    
+    .parking-tip {
+      margin-top: 6px;
+      font-size: 11px;
+      color: #6b7280;
+      display: flex;
+      align-items: flex-start;
+      gap: 4px;
+    }
+    
+    /* Alert Box */
+    .schedule-alert {
+      margin: 0 12px 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    
+    .alert-warning {
+      background: #fef3c7;
+      border: 1px solid #fcd34d;
+    }
+    
+    .alert-info {
+      background: #eff6ff;
+      border: 1px solid #93c5fd;
+    }
+    
+    .alert-tip {
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+    }
+    
+    .alert-icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    
+    .alert-warning .alert-icon {
+      color: #b45309;
+    }
+    
+    .alert-info .alert-icon {
+      color: #2563eb;
+    }
+    
+    .alert-tip .alert-icon {
+      color: #16a34a;
+    }
+    
+    .alert-content {
+      flex: 1;
+    }
+    
+    .alert-title {
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    
+    .alert-warning .alert-title {
+      color: #92400e;
+    }
+    
+    .alert-info .alert-title {
+      color: #1e40af;
+    }
+    
+    .alert-tip .alert-title {
+      color: #166534;
+    }
+    
+    .alert-text {
+      font-size: 12px;
+      color: #4b5563;
+      line-height: 1.4;
+    }
+    
+    /* Tips List */
+    .schedule-tips {
+      margin: 0 12px 12px;
+      padding: 10px 12px;
+      background: #f9fafb;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+    }
+    
+    .tips-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #6b7280;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .tips-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    
+    .tip-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      font-size: 12px;
+      color: #4b5563;
+    }
+    
+    .tip-bullet {
+      width: 4px;
+      height: 4px;
+      background: #9ca3af;
+      border-radius: 50%;
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+    
+    /* Tags */
+    .schedule-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    
+    .tag {
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+    }
+    
+    .tag-green {
+      background: #dcfce7;
+      color: #166534;
+    }
+    
+    .tag-gray {
+      background: #f3f4f6;
+      color: #4b5563;
+    }
+    
+    .tag-outline {
+      background: white;
+      border: 1px solid #e5e7eb;
+      color: #6b7280;
+    }
+    
+    .tag-orange {
+      background: #fff7ed;
+      color: #c2410c;
+    }
+    
+    /* Star Rating */
+    .star-icon {
+      color: #eab308;
+      fill: #eab308;
+    }
+    
+    /* Backup Plan */
+    .backup-card {
+      background: #fef3c7;
+      border: 1px solid #fcd34d;
+      padding: 16px;
+      border-radius: 16px;
+      margin-bottom: 16px;
+    }
+    
+    .backup-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    
+    .backup-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #fde68a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #b45309;
+      flex-shrink: 0;
+    }
+    
+    .backup-title {
+      font-weight: 600;
+      color: #92400e;
+      margin-bottom: 4px;
+    }
+    
+    .backup-content {
+      font-size: 14px;
+      color: #a16207;
+    }
+    
+    .nav-buttons {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 1000;
+    }
+    
+    .nav-btn {
+      padding: 10px 20px;
+      border-radius: 9999px;
+      font-size: 14px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .nav-btn-prev {
+      background: white;
+      color: #374151;
+    }
+    
+    .nav-btn-prev:hover:not(:disabled) {
+      background: #f9fafb;
+    }
+    
+    .nav-btn-prev:disabled {
+      background: #f3f4f6;
+      color: #9ca3af;
+      cursor: not-allowed;
+    }
+    
+    .nav-btn-next {
+      background: linear-gradient(135deg, #f97316, #ef4444);
+      color: white;
+    }
+    
+    .nav-btn-next:hover:not(:disabled) {
+      opacity: 0.9;
+    }
+    
+    .nav-btn-next:disabled {
+      background: #f3f4f6;
+      color: #9ca3af;
+      cursor: not-allowed;
+    }
+    
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 2000;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    
+    .modal-overlay.active {
+      display: flex;
+    }
+    
+    .modal {
+      background: white;
+      border-radius: 24px 24px 0 0;
+      width: 100%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow: hidden;
+      animation: slideUp 0.3s ease-out;
+    }
+    
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+    
+    .modal-header {
+      padding: 20px 20px 12px;
+      border-bottom: 1px solid #f3f4f6;
+      position: relative;
+    }
+    
+    .modal-close-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #f3f4f6;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: #6b7280;
+    }
+    
+    .modal-close-btn:hover {
+      background: #e5e7eb;
+    }
+    
+    .modal-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #111827;
+      padding-right: 40px;
+    }
+    
+    .modal-subtitle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+    
+    .modal-content {
+      padding: 20px;
+      overflow-y: auto;
+      max-height: calc(90vh - 100px);
+    }
+    
+    .modal-image {
+      width: 100%;
+      height: 200px;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 16px;
+      background: #f3f4f6;
+    }
+    
+    .modal-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .modal-section {
+      margin-bottom: 16px;
+    }
+    
+    .modal-section-title {
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .modal-section-text {
+      font-size: 14px;
+      color: #4b5563;
+      line-height: 1.6;
+    }
+    
+    .modal-info-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px;
+      background: #f9fafb;
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+    
+    .modal-info-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    
+    .modal-info-content {
+      flex: 1;
+    }
+    
+    .modal-info-label {
+      font-size: 12px;
+      color: #6b7280;
+      margin-bottom: 2px;
+    }
+    
+    .modal-info-value {
+      font-size: 14px;
+      color: #374151;
+    }
+    
+    .modal-tips {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .modal-tip {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    
+    .modal-tip-number {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #fef3c7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: #92400e;
+      flex-shrink: 0;
+    }
+    
+    .modal-tip-text {
+      font-size: 14px;
+      color: #4b5563;
+    }
+    
+    .dishes-gallery {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    
+    .dish-item {
+      text-align: center;
+    }
+    
+    .dish-image {
+      width: 100%;
+      height: 100px;
+      border-radius: 8px;
+      object-fit: cover;
+      margin-bottom: 6px;
+    }
+    
+    .dish-name {
+      font-size: 12px;
+      color: #4b5563;
+    }
+    
+    .icon {
+      width: 20px;
+      height: 20px;
+    }
+    
+    .icon-sm {
+      width: 16px;
+      height: 16px;
+    }
+    
+    .icon-lg {
+      width: 24px;
+      height: 24px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="header-top">
+        <div class="logo">
+          <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m8 3 4 8 5-5 5 15H2L8 3z"></path>
+          </svg>
+          <span class="logo-text">亲子自驾游</span>
+        </div>
+        <span class="badge badge-orange">
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+            <line x1="16" x2="16" y1="2" y2="6"></line>
+            <line x1="8" x2="8" y1="2" y2="6"></line>
+            <line x1="3" x2="21" y1="10" y2="10"></line>
+          </svg>
+          8天7晚
+        </span>
+      </div>
+      <p class="header-subtitle">深圳出发 · 丹霞山 → 莽山 → 永州 → 衡山 → 英德 → 深圳<br><small style="color:#9ca3af;font-weight:normal;">⚠️ 餐厅信息仅供参考，建议通过大众点评/美团确认后前往</small></p>
+    </div>
+    
+    <div class="day-selector-container">
+      <div class="day-selector" id="daySelector"></div>
+    </div>
+  </header>
+
+  <main class="main-content" id="mainContent"></main>
+
+  <div class="nav-buttons">
+    <button class="nav-btn nav-btn-prev" id="prevBtn" onclick="changeDay(-1)">前一天</button>
+    <button class="nav-btn nav-btn-next" id="nextBtn" onclick="changeDay(1)">后一天</button>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <button class="modal-close-btn" onclick="closeModal()">&times;</button>
+        <h2 class="modal-title" id="modalTitle"></h2>
+        <p class="modal-subtitle" id="modalSubtitle"></p>
+      </div>
+      <div class="modal-content" id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  
+  <script>
+    // 景点图片
+    const attractionImages = {
+      'danxia-geo': 'https://images.unsplash.com/photo-1580619305218-8423a7ef79b4?w=800&h=600&fit=crop',
+      'yangyuan': 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop',
+      'mangshan': 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&h=600&fit=crop',
+      'mangshan-spa': 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&h=600&fit=crop',
+      'lingling': 'https://images.unsplash.com/photo-1548013146-72479768bada?w=800&h=600&fit=crop',
+      'yuxi': 'https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=800&h=600&fit=crop',
+      'liuzi': 'https://images.unsplash.com/photo-1545893835-abaa50cbe628?w=800&h=600&fit=crop',
+      'nanyue-town': 'https://images.unsplash.com/photo-1528164344705-47542687000d?w=800&h=600&fit=crop',
+      'nanyue-temple': 'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=800&h=600&fit=crop',
+      'shuilian': 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=800&h=600&fit=crop',
+      'zhurong': 'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=800&h=600&fit=crop',
+      'zhonglie': 'https://images.unsplash.com/photo-1533929736458-ca588d08c8be?w=800&h=600&fit=crop',
+      'chocolate-diy': 'https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=800&h=600&fit=crop',
+      'water-world': 'https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?w=800&h=600&fit=crop',
+      'tea-garden': 'https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=800&h=600&fit=crop'
+    };
+    
+    // 菜品图片
+    const dishImages = {
+      '客家酿豆腐': 'https://images.unsplash.com/photo-1582576163090-09d3b6f8a969?w=400&h=300&fit=crop',
+      '山坑鱼': 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=400&h=300&fit=crop',
+      '儿童蒸蛋': 'https://images.unsplash.com/photo-1482049016gy4-70cfb2a2cd3c?w=400&h=300&fit=crop',
+      '免辣剁椒鱼头': 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=400&h=300&fit=crop',
+      '腊肉炒笋': 'https://images.unsplash.com/photo-1544025162-d76694265947?w=400&h=300&fit=crop',
+      '清炒时蔬': 'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&h=300&fit=crop',
+      '莽山腊肉': 'https://images.unsplash.com/photo-1558030006-450675393462?w=400&h=300&fit=crop',
+      '山野菜': 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&h=300&fit=crop',
+      '土鸡汤': 'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400&h=300&fit=crop',
+      '永州血鸭': 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=400&h=300&fit=crop',
+      '东安鸡': 'https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=400&h=300&fit=crop',
+      '蒸蛋': 'https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=400&h=300&fit=crop',
+      '酿豆腐': 'https://images.unsplash.com/photo-1582576163090-09d3b6f8a969?w=400&h=300&fit=crop',
+      '蒸蛋羹': 'https://images.unsplash.com/photo-1482049016gy4-70cfb2a2cd3c?w=400&h=300&fit=crop',
+      '永州喝螺': 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=300&fit=crop',
+      '青菜': 'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&h=300&fit=crop',
+      '衡山腊肉火锅': 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400&h=300&fit=crop',
+      '豆腐圆子': 'https://images.unsplash.com/photo-1582576163090-09d3b6f8a969?w=400&h=300&fit=crop',
+      '素火腿': 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=300&fit=crop',
+      '罗汉斋': 'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&h=300&fit=crop',
+      '素蒸蛋': 'https://images.unsplash.com/photo-1482049016gy4-70cfb2a2cd3c?w=400&h=300&fit=crop',
+      '衡山雪鸭': 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=400&h=300&fit=crop',
+      '拆骨肉荷包蛋': 'https://images.unsplash.com/photo-1482049016gy4-70cfb2a2cd3c?w=400&h=300&fit=crop',
+      '豆腐汤': 'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400&h=300&fit=crop',
+      '野菜炒饭': 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=400&h=300&fit=crop',
+      '蒸红薯': 'https://images.unsplash.com/photo-1596097635121-14b63b7bbfc2?w=400&h=300&fit=crop',
+      '土鸡火锅': 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400&h=300&fit=crop',
+      '农家小炒': 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=400&h=300&fit=crop',
+      '时蔬': 'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&h=300&fit=crop',
+      '巧克力主题儿童套餐': 'https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=400&h=300&fit=crop',
+      '红茶排骨': 'https://images.unsplash.com/photo-1544025162-d76694265947?w=400&h=300&fit=crop',
+      '清远鸡煲': 'https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=400&h=300&fit=crop',
+      '腐竹': 'https://images.unsplash.com/photo-1582576163090-09d3b6f8a969?w=400&h=300&fit=crop'
+    };
+
+    // 行程数据（含停车场信息）
+    const itineraryData = [
+      {
+        day: 1,
+        date: "2.18 周二",
+        title: "深圳→韶关丹霞山",
+        subtitle: "地质探险",
+        route: { from: "深圳", to: "丹霞山", duration: "4小时", distance: "280km" },
+        weather: "晴天 8-18℃",
+        startCoord: [22.5431, 114.0579],
+        endCoord: [24.9486, 113.7394],
+        schedule: [
+          { 
+            time: "07:30", 
+            timeEnd: "11:30",
+            type: "departure", 
+            name: "深圳出发",
+            content: "深圳出发，驾车前往丹霞山",
+            alert: { type: "info", title: "温馨提示", text: "建议提前检查车况，准备好路上零食和水，全程约280公里" }
+          },
+          { 
+            time: "11:30", 
+            timeEnd: "12:30",
+            type: "arrival", 
+            name: "抵达丹霞山景区",
+            content: "抵达丹霞山，办理入住",
+            parking: {
+              name: "丹霞山景区停车场",
+              type: "own",
+              fee: "10元/次",
+              capacity: "大型停车场，约500个车位",
+              tips: "景区正门停车场，位置充足，建议停在靠近入口处"
+            }
+          },
+          { 
+            time: "12:30", 
+            timeEnd: "13:30",
+            type: "restaurant",
+            id: "danxia-food",
+            name: "丹霞农家菜（南门总店）",
+            meal: "午餐",
+            rating: 4.9,
+            price: 55,
+            address: "丹霞山景区南门入口处",
+            dishes: ["客家酿豆腐", "山坑鱼", "儿童蒸蛋"],
+            hours: "10:00-20:00",
+            coord: [24.9501, 113.7410],
+            parking: {
+              name: "景区南门停车场",
+              type: "own",
+              fee: "与景区共用，已购票免费",
+              distance: "步行约2分钟",
+              tips: "就在餐厅门口，用餐期间可免费停放"
+            },
+            alert: { type: "tip", title: "推荐菜品", text: "客家酿豆腐口感嫩滑，适合小朋友；山坑鱼鲜美无刺" }
+          },
+          { 
+            time: "13:30", 
+            timeEnd: "14:30",
+            type: "attraction",
+            id: "danxia-geo",
+            name: "丹霞山地质科普馆",
+            description: "免费参观，儿童互动区学习丹霞地貌形成过程，建议给孩子准备放大镜观察岩石标本",
+            address: "广东省韶关市仁化县丹霞山景区内",
+            ticket: "免费",
+            booking: "现场参观，无需预约",
+            tips: ["建议预留1小时参观时间", "儿童互动区有专人讲解", "可领取科普手册"],
+            hours: "09:00-17:00",
+            coord: [24.9486, 113.7394],
+            parking: {
+              name: "景区内部停车场",
+              type: "own",
+              fee: "包含在景区门票内",
+              distance: "科普馆就在停车场旁边",
+              tips: "无需额外停车，步行即可到达"
+            },
+            alert: { type: "info", title: "亲子互动", text: "可以让孩子带着放大镜观察岩石标本，增加趣味性" }
+          },
+          { 
+            time: "15:00", 
+            timeEnd: "16:30",
+            type: "attraction",
+            id: "yangyuan",
+            name: "阳元石景区",
+            description: "平缓路线徒步，设置「找化石」小游戏。九九天梯需1.2米以上儿童才能攀登，注意安全",
+            address: "广东省韶关市仁化县丹霞山阳元石景区",
+            ticket: "包含在丹霞山门票内（成人100元，儿童半价）",
+            booking: "可在「丹霞山景区」公众号或美团预订",
+            tips: ["选择平缓路线，适合亲子", "带好饮用水和防晒用品", "注意护拦间隙，牵好孩子"],
+            hours: "06:30-18:00",
+            coord: [24.9456, 113.7328],
+            parking: {
+              name: "阳元石景区停车场",
+              type: "own",
+              fee: "包含在景区门票内",
+              distance: "景区入口处",
+              tips: "步行游览，车停在此处即可"
+            },
+            alert: { type: "warning", title: "安全提醒", text: "九九天梯需1.2米以上儿童才能攀登，护栏间隙较大，务必牵好孩子" }
+          },
+          { 
+            time: "18:00", 
+            timeEnd: "19:30",
+            type: "restaurant",
+            id: "xiangmeizi",
+            name: "湘妹子菜馆",
+            meal: "晚餐",
+            rating: 4.8,
+            price: 48,
+            address: "丹霞山景区商业街",
+            dishes: ["免辣剁椒鱼头", "腊肉炒笋", "清炒时蔬"],
+            hours: "11:00-21:00",
+            coord: [24.9489, 113.7402],
+            parking: {
+              name: "商业街停车场",
+              type: "nearby",
+              fee: "免费",
+              distance: "餐厅门口路边停车位",
+              tips: "傍晚用餐高峰期可能需要等位"
+            }
+          },
+          { 
+            time: "20:00", 
+            timeEnd: "",
+            type: "hotel",
+            name: "丹霞山景区内民宿",
+            features: "推窗见山景，有儿童游乐区",
+            parking: {
+              name: "民宿专属停车场",
+              type: "own",
+              fee: "免费",
+              tips: "入住客人免费停车，向店家索取停车证"
+            }
+          }
+        ]
+      },
+      {
+        day: 2,
+        date: "2.19 周三",
+        title: "丹霞山→莽山",
+        subtitle: "云海温泉",
+        route: { from: "丹霞山", to: "莽山", duration: "2.5小时", distance: "180km" },
+        weather: "晴天 6-16℃",
+        startCoord: [24.9486, 113.7394],
+        endCoord: [24.9932, 112.8672],
+        schedule: [
+          { 
+            time: "08:00", 
+            timeEnd: "10:30",
+            type: "departure", 
+            name: "民宿早餐后出发",
+            content: "早餐后退房，驾车前往莽山",
+            alert: null
+          },
+          { 
+            time: "10:30", 
+            timeEnd: "11:00",
+            type: "arrival", 
+            name: "抵达莽山国家森林公园",
+            content: "抵达莽山，准备游览",
+            parking: {
+              name: "莽山景区游客中心停车场",
+              type: "own",
+              fee: "10元/次",
+              capacity: "大型停车场，约300个车位",
+              tips: "建议停在游客中心附近，方便乘坐景区接驳车"
+            }
+          },
+          { 
+            time: "12:00", 
+            timeEnd: "13:00",
+            type: "restaurant",
+            id: "mangshan-food",
+            name: "莽山特色餐厅",
+            meal: "午餐",
+            rating: 4.7,
+            price: 60,
+            address: "莽山景区入口商业街",
+            dishes: ["莽山腊肉", "山野菜", "土鸡汤"],
+            hours: "10:00-20:00",
+            coord: [24.9901, 112.8620],
+            parking: {
+              name: "商业街停车场",
+              type: "nearby",
+              fee: "免费",
+              distance: "步行约3分钟",
+              tips: "就在景区入口处，用餐可免费停放"
+            },
+            alert: { type: "tip", title: "特色推荐", text: "莽山腊肉是当地特产，土鸡汤滋补暖身适合冬季" }
+          },
+          { 
+            time: "13:30", 
+            timeEnd: "16:30",
+            type: "attraction",
+            id: "mangshan",
+            name: "莽山五指峰景区",
+            description: "乘索道上山（约20分钟），漫步海拔1600米的云海栈道。冬季可观赏壮观的云海、雾凇奇观，宛如童话世界。",
+            address: "湖南省郴州市宜章县莽山国家森林公园",
+            ticket: "成人门票+索道280元，儿童140元",
+            booking: "「莽山五指峰景区」公众号或携程预订",
+            tips: ["山顶比山下低8-10度，务必保暖", "索道运营时间9:00-16:00", "预留3-4小时游览"],
+            hours: "08:00-17:00",
+            coord: [24.9932, 112.8672],
+            parking: {
+              name: "五指峰索道站停车场",
+              type: "own",
+              fee: "10元/次",
+              distance: "索道站入口处",
+              tips: "建议早到，下午索道排队人多"
+            },
+            alert: { type: "warning", title: "保暖提醒", text: "山顶气温比山下低8-10度，务必给孩子穿厚外套！索道16:00停运，注意时间" }
+          },
+          { 
+            time: "17:00", 
+            timeEnd: "18:30",
+            type: "attraction",
+            id: "mangshan-spa",
+            name: "莽山森林温泉",
+            description: "树上汤泉独特体验，儿童专属温水池，水温30-35℃。泡温泉可缓解旅途疲劳。",
+            address: "莽山森林温泉酒店内",
+            ticket: "成人168元，儿童88元",
+            booking: "入住酒店客人可享优惠价",
+            tips: ["准备泳衣泳帽", "儿童需成人陪同", "建议傍晚时段人少"],
+            hours: "14:00-22:00",
+            coord: [24.9856, 112.8589],
+            parking: {
+              name: "温泉酒店停车场",
+              type: "own",
+              fee: "入住客人免费",
+              tips: "酒店住客凭房卡免费停车"
+            },
+            alert: { type: "info", title: "温泉提示", text: "儿童专属温水池水温30-35℃，傍晚时段人少更舒适，记得带泳衣泳帽" }
+          },
+          { 
+            time: "19:30", 
+            timeEnd: "",
+            type: "hotel",
+            name: "莽山森林温泉酒店",
+            features: "带儿童游乐设施，含温泉门票",
+            parking: {
+              name: "酒店地下停车场",
+              type: "own",
+              fee: "入住客人免费",
+              tips: "有室内停车场，冬季停车不用担心结冰"
+            },
+            alert: { type: "tip", title: "入住福利", text: "入住客人可享受温泉优惠价，带儿童游乐设施" }
+          }
+        ]
+      },
+      {
+        day: 3,
+        date: "2.20 周四",
+        title: "莽山→永州",
+        subtitle: "古城文化",
+        route: { from: "莽山", to: "永州", duration: "2小时", distance: "150km" },
+        weather: "多云 8-17℃",
+        startCoord: [24.9932, 112.8672],
+        endCoord: [26.2215, 111.6289],
+        schedule: [
+          { 
+            time: "08:00", 
+            timeEnd: "10:00",
+            type: "departure", 
+            name: "酒店早餐后退房",
+            content: "早餐后退房，驾车前往永州",
+            alert: null
+          },
+          { 
+            time: "10:00", 
+            timeEnd: "10:30",
+            type: "arrival", 
+            name: "抵达永州零陵区",
+            content: "抵达永州，办理入住",
+            parking: {
+              name: "酒店停车场",
+              type: "own",
+              fee: "入住客人免费",
+              tips: "市区酒店一般都有停车场"
+            }
+          },
+          { 
+            time: "12:00", 
+            timeEnd: "13:00",
+            type: "restaurant",
+            id: "yongzhou-duck",
+            name: "永州血鸭馆（零陵店）",
+            meal: "午餐",
+            rating: 4.9,
+            price: 50,
+            address: "永州市零陵区潇水中路",
+            dishes: ["永州血鸭", "东安鸡", "蒸蛋"],
+            hours: "10:00-21:00",
+            coord: [26.2201, 111.6256],
+            parking: {
+              name: "潇水中路路边停车位",
+              type: "nearby",
+              fee: "前2小时免费",
+              distance: "餐厅门口",
+              tips: "路边划线车位，中午时段容易找到位置"
+            },
+            alert: { type: "tip", title: "招牌必点", text: "永州血鸭是当地名菜，东安鸡酸甜开胃，蒸蛋适合小朋友" }
+          },
+          { 
+            time: "13:30", 
+            timeEnd: "15:30",
+            type: "attraction",
+            id: "lingling",
+            name: "零陵古城",
+            description: "逛明清古建筑群，石板街、古桥流水，给孩子穿汉服拍照。可购买汉服或租借。",
+            address: "湖南省永州市零陵区潇水西路",
+            ticket: "免费开放",
+            booking: "无需预约",
+            tips: ["汉服可在景区内租借", "下午光线好适合拍照", "石板路建议穿舒适鞋"],
+            hours: "全天开放",
+            coord: [26.2215, 111.6289],
+            parking: {
+              name: "零陵古城停车场",
+              type: "own",
+              fee: "免费",
+              capacity: "约100个车位",
+              tips: "古城入口处有大型停车场，周末可能较满"
+            },
+            alert: { type: "info", title: "拍照攻略", text: "景区可租借汉服，下午光线柔和适合拍照，石板路建议穿舒适鞋子" }
+          },
+          { 
+            time: "16:00", 
+            timeEnd: "17:00",
+            type: "attraction",
+            id: "yuxi",
+            name: "愚溪",
+            description: "沿溪散步，孩子可在浅水区玩水。愚溪因柳宗元的《愚溪诗序》而闻名。",
+            address: "湖南省永州市零陵区柳子街",
+            ticket: "免费",
+            booking: "无需预约",
+            tips: ["注意水深，看好孩子", "可带小网兜捉小鱼", "傍晚蚊虫多，备驱蚊液"],
+            hours: "全天开放",
+            coord: [26.2189, 111.6234],
+            parking: {
+              name: "柳子街路边停车位",
+              type: "nearby",
+              fee: "免费",
+              distance: "步行约5分钟",
+              tips: "柳子街是老街，建议停在附近再步行前往"
+            },
+            alert: { type: "warning", title: "安全提醒", text: "注意水深，时刻看护好孩子；傍晚蚊虫多，记得带驱蚊液" }
+          },
+          { 
+            time: "18:00", 
+            timeEnd: "19:30",
+            type: "restaurant",
+            id: "gucheng-food",
+            name: "古城农家菜",
+            meal: "晚餐",
+            rating: 4.8,
+            price: 45,
+            address: "零陵古城内",
+            dishes: ["酿豆腐", "清炒时蔬", "蒸蛋羹"],
+            hours: "11:00-21:00",
+            coord: [26.2212, 111.6291],
+            parking: {
+              name: "古城停车场",
+              type: "own",
+              fee: "免费",
+              distance: "步行约3分钟",
+              tips: "与古城共用停车场"
+            }
+          },
+          { 
+            time: "20:00", 
+            timeEnd: "",
+            type: "hotel",
+            name: "永州零陵区亲子酒店",
+            features: "地理位置优越，设施齐全",
+            parking: {
+              name: "酒店停车场",
+              type: "own",
+              fee: "入住客人免费",
+              tips: "市区酒店配套停车场"
+            }
+          }
+        ]
+      },
+      {
+        day: 4,
+        date: "2.21 周五",
+        title: "永州→衡山",
+        subtitle: "文化之旅",
+        route: { from: "永州", to: "衡山", duration: "3小时", distance: "220km" },
+        weather: "晴天 5-14℃",
+        startCoord: [26.2215, 111.6289],
+        endCoord: [27.2345, 112.7389],
+        schedule: [
+          { 
+            time: "08:30", 
+            timeEnd: "10:00",
+            type: "attraction",
+            id: "liuzi",
+            name: "柳子庙",
+            description: "了解柳宗元「永州八记」，提前准备儿童版讲解词增加趣味性。",
+            address: "湖南省永州市零陵区柳子街",
+            ticket: "成人25元，儿童半价",
+            booking: "现场购票",
+            tips: ["提前了解柳宗元故事", "可请讲解员", "注意保护文物"],
+            hours: "08:00-17:30",
+            coord: [26.2178, 111.6223],
+            parking: {
+              name: "柳子街停车场",
+              type: "nearby",
+              fee: "5元/次",
+              distance: "步行约3分钟",
+              tips: "柳子街入口处有小型停车场"
+            },
+            alert: { type: "info", title: "亲子建议", text: "提前准备柳宗元的儿童故事，让参观更有趣味性" }
+          },
+          { 
+            time: "10:30", 
+            timeEnd: "12:00",
+            type: "restaurant",
+            id: "yongzhou-special",
+            name: "永州特色餐厅",
+            meal: "午餐",
+            rating: 4.9,
+            price: 55,
+            address: "永州市区",
+            dishes: ["永州喝螺", "腊肉炒笋", "青菜"],
+            hours: "10:00-21:00",
+            coord: [26.2189, 111.6267],
+            parking: {
+              name: "餐厅门口停车位",
+              type: "own",
+              fee: "用餐免费",
+              tips: "市区餐厅一般有门前车位"
+            }
+          },
+          { 
+            time: "13:00", 
+            timeEnd: "16:00",
+            type: "departure", 
+            name: "出发前往衡山",
+            content: "驾车前往衡山南岳区",
+            alert: { type: "info", title: "行程提醒", text: "全程约220公里，预计3小时，中途可在服务区休息" }
+          },
+          { 
+            time: "16:00", 
+            timeEnd: "16:30",
+            type: "arrival", 
+            name: "抵达南岳区",
+            content: "抵达衡山南岳区，办理入住",
+            parking: {
+              name: "酒店停车场",
+              type: "own",
+              fee: "入住客人免费",
+              tips: "南岳区酒店大多有配套停车场"
+            }
+          },
+          { 
+            time: "16:30", 
+            timeEnd: "17:30",
+            type: "attraction",
+            id: "nanyue-town",
+            name: "南岳古镇",
+            description: "逛古镇街巷，品尝当地小吃，感受祈福文化氛围。",
+            address: "湖南省衡阳市南岳区古镇",
+            ticket: "免费",
+            booking: "无需预约",
+            tips: ["南岳素饼是当地特产", "傍晚人少适合闲逛", "注意商铺关门时间"],
+            hours: "全天开放",
+            coord: [27.2345, 112.7389],
+            parking: {
+              name: "古镇停车场",
+              type: "own",
+              fee: "10元/次",
+              distance: "古镇入口处",
+              tips: "步行游览古镇，车停在入口停车场"
+            },
+            alert: { type: "tip", title: "特产推荐", text: "南岳素饼是当地特产，适合作为伴手礼" }
+          },
+          { 
+            time: "18:00", 
+            timeEnd: "19:30",
+            type: "restaurant",
+            id: "lijun",
+            name: "丽君饭店（庙西店）",
+            meal: "晚餐",
+            rating: 4.8,
+            price: 50,
+            address: "南岳区庙西街",
+            dishes: ["衡山腊肉火锅", "豆腐圆子", "青菜"],
+            hours: "10:00-21:00",
+            coord: [27.2321, 112.7356],
+            parking: {
+              name: "庙西街路边停车位",
+              type: "nearby",
+              fee: "免费",
+              distance: "餐厅门口",
+              tips: "街道两侧有划线车位"
+            }
+          },
+          { 
+            time: "20:00", 
+            timeEnd: "",
+            type: "hotel",
+            name: "南岳区亲子酒店",
+            features: "有儿童温泉和游乐设施",
+            parking: {
+              name: "酒店停车场",
+              type: "own",
+              fee: "入住客人免费",
+              tips: "南岳区酒店配套停车场"
+            }
+          }
+        ]
+      },
+      {
+        day: 5,
+        date: "2.22 周六",
+        title: "衡山山脚",
+        subtitle: "虔诚祈福",
+        route: { from: "酒店", to: "南岳大庙", duration: "10分钟", distance: "2km" },
+        weather: "晴天 5-14℃",
+        startCoord: [27.2345, 112.7389],
+        endCoord: [27.2321, 112.7356],
+        schedule: [
+          { 
+            time: "08:00", 
+            timeEnd: "08:30",
+            type: "activity", 
+            name: "酒店早餐",
+            content: "享用酒店早餐",
+            alert: null
+          },
+          { 
+            time: "08:30", 
+            timeEnd: "11:00",
+            type: "attraction",
+            id: "nanyue-temple",
+            name: "南岳大庙",
+            description: "南方最大的古建筑群，有「江南小故宫」之称。给孩子准备祈福带，写心愿，求平安符。",
+            address: "湖南省衡阳市南岳区衡山路",
+            ticket: "成人40元，儿童半价",
+            booking: "「南岳衡山」公众号预约",
+            tips: ["穿着得体，不宜暴露", "祈福带可在寺内购买", "建议请导游讲解"],
+            hours: "07:00-17:30",
+            coord: [27.2321, 112.7356],
+            parking: {
+              name: "南岳大庙停车场",
+              type: "own",
+              fee: "10元/次",
+              capacity: "大型停车场，约400个车位",
+              tips: "大庙正门左侧，节假日可能较拥挤，建议早到"
+            },
+            alert: { type: "warning", title: "注意事项", text: "穿着得体不宜暴露，建议请导游讲解；可给孩子准备祈福带写心愿" }
+          },
+          { 
+            time: "11:30", 
+            timeEnd: "13:00",
+            type: "restaurant",
+            id: "shanyuan",
+            name: "善缘素食（大庙旁）",
+            meal: "午餐",
+            rating: 4.9,
+            price: 35,
+            address: "南岳大庙旁",
+            dishes: ["素火腿", "罗汉斋", "素蒸蛋"],
+            hours: "07:00-19:00",
+            coord: [27.2318, 112.7352],
+            parking: {
+              name: "大庙停车场",
+              type: "nearby",
+              fee: "10元/次",
+              distance: "步行约2分钟",
+              tips: "与大庙共用停车场，用餐时间可免费"
+            },
+            alert: { type: "tip", title: "素斋特色", text: "参拜后品尝素斋，素火腿和罗汉斋是招牌菜" }
+          },
+          { 
+            time: "14:00", 
+            timeEnd: "15:00",
+            type: "activity", 
+            name: "酒店休息",
+            content: "回酒店午休，养精蓄锐",
+            alert: null
+          },
+          { 
+            time: "15:00", 
+            timeEnd: "16:30",
+            type: "attraction",
+            id: "shuilian",
+            name: "水帘洞景区",
+            description: "看瀑布，走平缓步道，孩子可在浅水区玩水。",
+            address: "湖南省衡阳市南岳区水帘洞",
+            ticket: "成人30元，儿童半价",
+            booking: "现场购票",
+            tips: ["穿防滑鞋", "注意瀑布水量", "可带玩水工具"],
+            hours: "08:00-17:00",
+            coord: [27.2456, 112.7189],
+            parking: {
+              name: "水帘洞景区停车场",
+              type: "own",
+              fee: "5元/次",
+              distance: "景区入口处",
+              tips: "小型停车场，车位有限"
+            },
+            alert: { type: "info", title: "亲子提示", text: "穿防滑鞋，可带玩水工具，孩子可在浅水区玩水" }
+          },
+          { 
+            time: "17:30", 
+            timeEnd: "19:00",
+            type: "restaurant",
+            id: "kaoshan",
+            name: "靠山王土菜馆",
+            meal: "晚餐",
+            rating: 4.9,
+            price: 45,
+            address: "南岳区古镇街",
+            dishes: ["衡山雪鸭", "拆骨肉荷包蛋", "蒸蛋"],
+            hours: "10:00-21:00",
+            coord: [27.2332, 112.7367],
+            parking: {
+              name: "古镇街停车场",
+              type: "nearby",
+              fee: "免费",
+              distance: "步行约3分钟",
+              tips: "古镇街边有划线车位"
+            }
+          },
+          { 
+            time: "19:30", 
+            timeEnd: "",
+            type: "hotel",
+            name: "南岳区亲子酒店（续住）",
+            features: "有儿童温泉和游乐设施",
+            parking: {
+              name: "酒店停车场",
+              type: "own",
+              fee: "入住客人免费",
+              tips: "续住客人继续免费停车"
+            }
+          }
+        ]
+      },
+      {
+        day: 6,
+        date: "2.23 周日",
+        title: "衡山登顶",
+        subtitle: "祝融峰祈福",
+        route: { from: "游客中心", to: "祝融峰", duration: "索道40分钟", distance: "" },
+        weather: "小雨 5-14℃（60%概率）",
+        startCoord: [27.2345, 112.7389],
+        endCoord: [27.2889, 112.6834],
+        backupPlan: {
+          title: "雨天备选方案",
+          content: "如遇小雨/大雾：上午南岳大庙二次参观，中午品尝南岳素斋，下午祝圣寺参观+古镇茶馆品茶"
+        },
+        schedule: [
+          { 
+            time: "07:30", 
+            timeEnd: "08:00",
+            type: "activity", 
+            name: "酒店早餐，穿戴保暖衣物",
+            content: "早餐，准备登山装备",
+            alert: { type: "warning", title: "天气提醒", text: "今日有小雨概率60%，请带好雨具和保暖衣物" }
+          },
+          { 
+            time: "08:00", 
+            timeEnd: "08:30",
+            type: "departure", 
+            name: "前往游客中心",
+            content: "乘车前往衡山游客中心",
+            parking: {
+              name: "衡山游客中心停车场",
+              type: "own",
+              fee: "20元/天",
+              capacity: "大型停车场，约800个车位",
+              tips: "建议停在靠近入口处，方便乘坐环保车"
+            },
+            alert: null
+          },
+          { 
+            time: "08:30", 
+            timeEnd: "09:30",
+            type: "activity", 
+            name: "乘坐环保车+索道",
+            content: "乘环保车至半山，转索道至南天门",
+            alert: { type: "info", title: "交通提示", text: "环保车+索道直达南天门，约需1小时" }
+          },
+          { 
+            time: "09:30", 
+            timeEnd: "11:00",
+            type: "attraction",
+            id: "zhurong",
+            name: "祝融峰",
+            description: "从南天门走约1.5公里台阶抵达祝融殿，山顶祈福，俯瞰群山。山顶气温低5-8度。",
+            address: "湖南省衡阳市南岳区衡山山顶",
+            ticket: "门票110元+环保车往返78元，儿童半价",
+            booking: "「南岳衡山」公众号预约",
+            tips: ["乘环保车+索道直达南天门", "山顶停留不超过2小时", "带雨具和保暖衣物"],
+            hours: "07:00-17:00",
+            coord: [27.2889, 112.6834],
+            parking: {
+              name: "游客中心停车场（山脚）",
+              type: "own",
+              fee: "20元/天",
+              tips: "山顶无停车场，车停在游客中心，乘环保车上山"
+            },
+            alert: { type: "warning", title: "保暖重要", text: "山顶气温低5-8度，务必穿厚外套；停留不超过2小时；带雨具！" }
+          },
+          { 
+            time: "12:00", 
+            timeEnd: "13:30",
+            type: "restaurant",
+            id: "banshan",
+            name: "半山亭茶馆餐厅",
+            meal: "午餐",
+            rating: 4.8,
+            price: 35,
+            address: "衡山半山亭",
+            dishes: ["豆腐汤", "野菜炒饭", "蒸红薯"],
+            hours: "08:00-17:00",
+            coord: [27.2698, 112.7012],
+            parking: {
+              name: "无停车场（山上）",
+              type: "none",
+              fee: "-",
+              tips: "半山亭在山上，只能乘环保车到达，无需停车"
+            },
+            alert: { type: "tip", title: "山间美食", text: "山间简餐，豆腐汤暖身，蒸红薯小朋友喜欢" }
+          },
+          { 
+            time: "14:00", 
+            timeEnd: "15:00",
+            type: "attraction",
+            id: "zhonglie",
+            name: "忠烈祠",
+            description: "爱国主义教育基地，给孩子讲解抗战历史。",
+            address: "湖南省衡阳市南岳区衡山半山",
+            ticket: "包含在衡山门票内",
+            booking: "无需额外预约",
+            tips: ["保持肃静", "可提前准备历史故事", "适合青少年教育"],
+            hours: "08:00-17:00",
+            coord: [27.2612, 112.7089],
+            parking: {
+              name: "无停车场（山上）",
+              type: "none",
+              fee: "-",
+              tips: "忠烈祠在半山，乘环保车到达"
+            },
+            alert: { type: "info", title: "教育意义", text: "可提前准备抗战历史故事，对孩子进行爱国主义教育" }
+          },
+          { 
+            time: "16:00", 
+            timeEnd: "17:00",
+            type: "arrival", 
+            name: "返回酒店休息",
+            content: "乘环保车下山，返回酒店",
+            alert: null
+          },
+          { 
+            time: "18:00", 
+            timeEnd: "19:30",
+            type: "restaurant",
+            id: "hengyang-food",
+            name: "衡阳土菜馆",
+            meal: "晚餐",
+            rating: 4.7,
+            price: 50,
+            address: "南岳区古镇",
+            dishes: ["土鸡火锅", "农家小炒", "时蔬"],
+            hours: "10:00-21:00",
+            coord: [27.2335, 112.7372],
+            parking: {
+              name: "古镇停车场",
+              type: "nearby",
+              fee: "免费",
+              distance: "步行约3分钟",
+              tips: "傍晚车位较充足"
+            }
+          },
+          { 
+            time: "20:00", 
+            timeEnd: "",
+            type: "hotel",
+            name: "南岳区亲子酒店（续住）",
+            features: "整理行李，为明天出发做准备",
+            parking: {
+              name: "酒店停车场",
+              type: "own",
+              fee: "入住客人免费",
+              tips: "整理行李准备明天出发"
+            }
+          }
+        ]
+      },
+      {
+        day: 7,
+        date: "2.24 周一",
+        title: "衡山→英德",
+        subtitle: "童话王国",
+        route: { from: "衡山", to: "英德", duration: "4小时", distance: "320km" },
+        weather: "晴天 10-20℃",
+        startCoord: [27.2345, 112.7389],
+        endCoord: [24.1856, 113.4521],
+        schedule: [
+          { 
+            time: "08:00", 
+            timeEnd: "12:00",
+            type: "departure", 
+            name: "酒店早餐后出发",
+            content: "早餐后退房，驾车前往英德",
+            alert: { type: "info", title: "行程提醒", text: "全程约320公里，预计4小时，中途可在服务区休息用餐" }
+          },
+          { 
+            time: "12:00", 
+            timeEnd: "12:30",
+            type: "arrival", 
+            name: "抵达英德巧克力王国",
+            content: "抵达英德，办理入住",
+            parking: {
+              name: "巧克力王国停车场",
+              type: "own",
+              fee: "入住客人免费",
+              capacity: "大型停车场，约600个车位",
+              tips: "度假区大型停车场，位置充足"
+            }
+          },
+          { 
+            time: "12:30", 
+            timeEnd: "13:30",
+            type: "restaurant",
+            id: "chocolate-rest",
+            name: "巧克力王国主题餐厅",
+            meal: "午餐",
+            rating: 4.8,
+            price: 60,
+            address: "巧克力王国园区内",
+            dishes: ["巧克力主题儿童套餐", "红茶排骨", "蒸蛋"],
+            hours: "10:00-21:00",
+            coord: [24.1845, 113.4515],
+            parking: {
+              name: "园区停车场",
+              type: "own",
+              fee: "免费",
+              distance: "步行约5分钟",
+              tips: "园区停车场，凭门票或酒店房卡免费"
+            },
+            alert: { type: "tip", title: "小朋友最爱", text: "巧克力主题儿童套餐，红茶排骨是特色菜" }
+          },
+          { 
+            time: "14:30", 
+            timeEnd: "16:30",
+            type: "attraction",
+            id: "chocolate-diy",
+            name: "巧克力工厂DIY",
+            description: "亲手制作巧克力，包装成礼物带回家。这是孩子最期待的活动。",
+            address: "广东省清远市英德奥园巧克力王国",
+            ticket: "DIY体验98元/人",
+            booking: "「奥园英德巧克力王国」公众号预约",
+            tips: ["建议穿深色衣服防巧克力沾染", "成品可带走", "提前预约时段"],
+            hours: "10:00-18:00",
+            coord: [24.1856, 113.4521],
+            parking: {
+              name: "巧克力工厂停车场",
+              type: "own",
+              fee: "免费",
+              distance: "工厂门口",
+              tips: "就在DIY区域门口，非常方便"
+            },
+            alert: { type: "warning", title: "特别提醒", text: "建议穿深色衣服防止巧克力沾染；记得提前预约时段！" }
+          },
+          { 
+            time: "17:00", 
+            timeEnd: "18:30",
+            type: "activity", 
+            name: "自由活动",
+            content: "园区自由探索，拍照留念",
+            alert: null
+          },
+          { 
+            time: "19:00", 
+            timeEnd: "21:00",
+            type: "attraction",
+            id: "water-world",
+            name: "喀斯特汤泉水世界",
+            description: "儿童专属戏水区，水温30℃适合2月游玩。造浪池整点开放。",
+            address: "英德奥园巧克力王国园区内",
+            ticket: "成人168元，儿童88元",
+            booking: "入住酒店客人优惠价",
+            tips: ["带泳衣泳帽", "防水手机袋", "注意保暖离开时"],
+            hours: "10:00-22:00",
+            coord: [24.1834, 113.4508],
+            parking: {
+              name: "水世界停车场",
+              type: "own",
+              fee: "免费",
+              distance: "水世界入口处",
+              tips: "有室内更衣室和储物柜"
+            },
+            alert: { type: "info", title: "戏水提示", text: "儿童专属戏水区水温30℃；记得带泳衣泳帽和防水手机袋" }
+          },
+          { 
+            time: "21:30", 
+            timeEnd: "",
+            type: "hotel",
+            name: "英德巧克力王国主题酒店",
+            features: "房间有巧克力装饰，孩子超喜欢",
+            parking: {
+              name: "酒店地下停车场",
+              type: "own",
+              fee: "入住客人免费",
+              tips: "地下停车场，安全方便"
+            },
+            alert: { type: "tip", title: "亲子特色", text: "房间有巧克力装饰，小朋友会超喜欢！" }
+          }
+        ]
+      },
+      {
+        day: 8,
+        date: "2.25 周二",
+        title: "英德→深圳",
+        subtitle: "温馨返程",
+        route: { from: "英德", to: "深圳", duration: "2.5小时", distance: "200km" },
+        weather: "晴天 12-22℃",
+        startCoord: [24.1856, 113.4521],
+        endCoord: [22.5431, 114.0579],
+        schedule: [
+          { 
+            time: "08:30", 
+            timeEnd: "09:30",
+            type: "activity", 
+            name: "酒店早餐，睡到自然醒",
+            content: "享受悠闲的早晨",
+            alert: null
+          },
+          { 
+            time: "09:30", 
+            timeEnd: "11:00",
+            type: "attraction",
+            id: "tea-garden",
+            name: "英德茶园（可选）",
+            description: "参观茶园，了解茶文化，漫步茶园。英德红茶是当地特产。",
+            address: "广东省清远市英德英红镇",
+            ticket: "免费参观",
+            booking: "无需预约",
+            tips: ["可购买英德红茶作伴手礼", "空气清新适合散步", "拍照出片"],
+            hours: "08:00-17:00",
+            coord: [24.1789, 113.4234],
+            parking: {
+              name: "茶园停车场",
+              type: "own",
+              fee: "免费",
+              distance: "茶园入口处",
+              tips: "免费参观，停车也免费"
+            },
+            alert: { type: "tip", title: "伴手礼", text: "可购买英德红茶作为伴手礼，茶园空气清新适合散步" }
+          },
+          { 
+            time: "11:30", 
+            timeEnd: "12:30",
+            type: "restaurant",
+            id: "qingyuan-chicken",
+            name: "清远鸡煲王",
+            meal: "午餐",
+            rating: 4.9,
+            price: 60,
+            address: "英德市区",
+            dishes: ["清远鸡煲", "腐竹", "青菜"],
+            hours: "10:00-21:00",
+            coord: [24.1756, 113.4123],
+            parking: {
+              name: "餐厅门口停车位",
+              type: "own",
+              fee: "用餐免费",
+              tips: "市区餐厅门前车位"
+            },
+            alert: { type: "tip", title: "当地名菜", text: "清远鸡是广东名菜，返程前品尝一顿美味的鸡煲" }
+          },
+          { 
+            time: "13:00", 
+            timeEnd: "15:30",
+            type: "departure", 
+            name: "出发返回深圳",
+            content: "驾车返回深圳",
+            alert: { type: "info", title: "返程提醒", text: "全程约200公里，预计2.5小时，旅途愉快！" }
+          },
+          { 
+            time: "15:30", 
+            timeEnd: "",
+            type: "arrival", 
+            name: "抵达深圳，旅程结束",
+            content: "平安到家，整理旅行照片，与孩子一起回顾美好时光",
+            alert: null
+          },
+          { 
+            time: "", 
+            timeEnd: "",
+            type: "hotel",
+            name: "温馨的家",
+            features: "整理旅行照片，与孩子一起回顾美好时光",
+            parking: null
+          }
+        ]
+      }
+    ];
+
+    let currentDay = 1;
+    let map = null;
+    let markers = [];
+
+    // 初始化
+    function init() {
+      renderDaySelector();
+      renderContent();
+      updateNavButtons();
+    }
+
+    // 渲染日期选择器
+    function renderDaySelector() {
+      const container = document.getElementById('daySelector');
+      container.innerHTML = itineraryData.map(day => `
+        <button class="day-btn ${day.day === currentDay ? 'day-btn-active' : 'day-btn-inactive'}" 
+                onclick="selectDay(${day.day})">
+          <span class="day-label">Day ${day.day}</span>
+          <span class="day-date">${day.date.split(' ')[0]}</span>
+        </button>
+      `).join('');
+    }
+
+    // 选择日期
+    function selectDay(day) {
+      currentDay = day;
+      renderDaySelector();
+      renderContent();
+      updateNavButtons();
+    }
+
+    // 切换日期
+    function changeDay(delta) {
+      const newDay = currentDay + delta;
+      if (newDay >= 1 && newDay <= 8) {
+        selectDay(newDay);
+      }
+    }
+
+    // 更新导航按钮
+    function updateNavButtons() {
+      document.getElementById('prevBtn').disabled = currentDay === 1;
+      document.getElementById('nextBtn').disabled = currentDay === 8;
+    }
+
+    // 解析时间用于排序
+    function parseTime(timeStr) {
+      if (!timeStr) return 9999;
+      const match = timeStr.match(/(\d{1,2}):(\d{2})/);
+      if (match) {
+        return parseInt(match[1]) * 60 + parseInt(match[2]);
+      }
+      return 9999;
+    }
+
+    // 获取类型图标
+    function getTypeIcon(type) {
+      const icons = {
+        departure: `<svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"></path>
+          <circle cx="7" cy="17" r="2"></circle>
+          <circle cx="17" cy="17" r="2"></circle>
+        </svg>`,
+        arrival: `<svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>`,
+        attraction: `<svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>`,
+        restaurant: `<svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"></path>
+          <path d="M7 2v20"></path>
+          <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"></path>
+        </svg>`,
+        hotel: `<svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>`,
+        activity: `<svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+        </svg>`
+      };
+      return icons[type] || icons.activity;
+    }
+
+    // 获取类型名称
+    function getTypeName(type) {
+      const names = {
+        departure: '出发',
+        arrival: '抵达',
+        attraction: '景点',
+        restaurant: '餐饮',
+        hotel: '住宿',
+        activity: '活动'
+      };
+      return names[type] || '行程';
+    }
+
+    // 获取类型badge样式
+    function getTypeBadgeClass(type) {
+      const classes = {
+        departure: 'badge-departure',
+        arrival: 'badge-arrival',
+        attraction: 'badge-attraction',
+        restaurant: 'badge-restaurant',
+        hotel: 'badge-hotel',
+        activity: 'badge-activity'
+      };
+      return classes[type] || 'badge-activity';
+    }
+
+    // 获取类型圆点样式
+    function getTypeDotClass(type) {
+      const classes = {
+        departure: 'timeline-dot-departure',
+        arrival: 'timeline-dot-arrival',
+        attraction: 'timeline-dot-attraction',
+        restaurant: 'timeline-dot-restaurant',
+        hotel: 'timeline-dot-hotel',
+        activity: 'timeline-dot-activity'
+      };
+      return classes[type] || 'timeline-dot-activity';
+    }
+
+    // 获取类型图标样式
+    function getTypeIconClass(type) {
+      const classes = {
+        attraction: 'schedule-icon-attraction',
+        restaurant: 'schedule-icon-restaurant',
+        hotel: 'schedule-icon-hotel'
+      };
+      return classes[type] || '';
+    }
+
+    // 渲染提醒框
+    function renderAlert(alert) {
+      if (!alert) return '';
+      
+      const alertIcons = {
+        warning: `<svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
+          <line x1="12" x2="12" y1="9" y2="13"></line>
+          <line x1="12" x2="12.01" y1="17" y2="17"></line>
+        </svg>`,
+        info: `<svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" x2="12" y1="16" y2="12"></line>
+          <line x1="12" x2="12.01" y1="8" y2="8"></line>
+        </svg>`,
+        tip: `<svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+        </svg>`
+      };
+      
+      const alertClasses = {
+        warning: 'alert-warning',
+        info: 'alert-info',
+        tip: 'alert-tip'
+      };
+      
+      return `
+        <div class="schedule-alert ${alertClasses[alert.type]}">
+          ${alertIcons[alert.type]}
+          <div class="alert-content">
+            <div class="alert-title">${alert.title}</div>
+            <div class="alert-text">${alert.text}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 渲染停车场信息
+    function renderParking(parking) {
+      if (!parking) return '';
+      
+      const typeLabels = {
+        'own': '自有停车场',
+        'nearby': '附近停车场',
+        'free': '免费停车'
+      };
+      
+      const badgeClass = parking.type === 'own' ? 'parking-badge-own' : 
+                         parking.fee.includes('免费') ? 'parking-badge-free' : 'parking-badge-nearby';
+      
+      return `
+        <div class="parking-info">
+          <div class="parking-header">
+            <svg class="parking-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect width="16" height="16" x="4" y="4" rx="2"></rect>
+              <path d="M9 9h3a2 2 0 0 1 0 4H9V9z"></path>
+              <path d="M9 13v4"></path>
+            </svg>
+            <span class="parking-title">🚗 推荐停车</span>
+          </div>
+          <div class="parking-name">${parking.name}</div>
+          <div class="parking-details">
+            <span class="parking-badge ${badgeClass}">${parking.type === 'own' ? '景区/餐厅停车场' : '附近停车场'}</span>
+            ${parking.fee ? `<span class="parking-detail-item">💰 ${parking.fee}</span>` : ''}
+            ${parking.distance ? `<span class="parking-detail-item">📍 ${parking.distance}</span>` : ''}
+            ${parking.capacity ? `<span class="parking-detail-item">🅿️ ${parking.capacity}</span>` : ''}
+          </div>
+          ${parking.tips ? `
+          <div class="parking-tip">
+            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #6b7280;">
+              <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
+            </svg>
+            <span>${parking.tips}</span>
+          </div>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    // 初始化地图
+    function initMap(day) {
+      if (map) {
+        map.remove();
+      }
+      
+      const mapContainer = document.getElementById('map');
+      if (!mapContainer) return;
+      
+      map = L.map('map').setView(day.startCoord, 8);
+      
+      L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', {
+        subdomains: ['1', '2', '3', '4'],
+        maxZoom: 18,
+        attribution: '© 高德地图'
+      }).addTo(map);
+      
+      markers = [];
+      
+      // 添加起点标记
+      const startIcon = L.divIcon({
+        className: 'custom-marker',
+        html: `<div style="width:24px;height:24px;background:#3b82f6;border-radius:50%;border:3px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3);"></div>`,
+        iconSize: [24, 24],
+        iconAnchor: [12, 12]
+      });
+      const startMarker = L.marker(day.startCoord, { icon: startIcon }).addTo(map);
+      startMarker.bindPopup(`<b>起点</b><br>${day.route.from}`);
+      markers.push(startMarker);
+      
+      // 添加终点标记
+      const endIcon = L.divIcon({
+        className: 'custom-marker',
+        html: `<div style="width:24px;height:24px;background:#ef4444;border-radius:50%;border:3px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3);"></div>`,
+        iconSize: [24, 24],
+        iconAnchor: [12, 12]
+      });
+      const endMarker = L.marker(day.endCoord, { icon: endIcon }).addTo(map);
+      endMarker.bindPopup(`<b>终点</b><br>${day.route.to}`);
+      markers.push(endMarker);
+      
+      // 添加路线
+      const routeLine = L.polyline([day.startCoord, day.endCoord], {
+        color: '#f97316',
+        weight: 3,
+        opacity: 0.8,
+        dashArray: '10, 5'
+      }).addTo(map);
+      
+      // 从schedule中添加景点和餐厅标记
+      day.schedule.forEach(item => {
+        if ((item.type === 'attraction' || item.type === 'restaurant') && item.coord) {
+          const color = item.type === 'attraction' ? '#f97316' : '#eab308';
+          const label = item.type === 'attraction' ? '景' : '餐';
+          const icon = L.divIcon({
+            className: 'custom-marker',
+            html: `<div style="width:24px;height:24px;background:${color};border-radius:50%;border:3px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;color:white;font-size:10px;font-weight:bold;">${label}</div>`,
+            iconSize: [24, 24],
+            iconAnchor: [12, 12]
+          });
+          const marker = L.marker(item.coord, { icon: icon }).addTo(map);
+          if (item.type === 'restaurant') {
+            marker.bindPopup(`<b>${item.name}</b><br>${item.meal} · ¥${item.price}/人`);
+          } else {
+            marker.bindPopup(`<b>${item.name}</b><br>${item.time}`);
+          }
+          markers.push(marker);
+        }
+      });
+      
+      const bounds = L.latLngBounds([day.startCoord, day.endCoord]);
+      markers.forEach(m => bounds.extend(m.getLatLng()));
+      map.fitBounds(bounds, { padding: [30, 30] });
+    }
+
+    // 渲染内容
+    function renderContent() {
+      const day = itineraryData.find(d => d.day === currentDay);
+      const container = document.getElementById('mainContent');
+      
+      // 对schedule按时间排序
+      const sortedSchedule = [...day.schedule].sort((a, b) => {
+        const timeA = parseTime(a.time);
+        const timeB = parseTime(b.time);
+        return timeA - timeB;
+      });
+      
+      container.innerHTML = `
+        <!-- Day Header -->
+        <div class="card day-header-card">
+          <div class="day-weather">
+            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v2"></path>
+              <path d="M12 20v2"></path>
+              <path d="m4.93 4.93 1.41 1.41"></path>
+              <path d="m17.66 17.66 1.41 1.41"></path>
+              <path d="M2 12h2"></path>
+              <path d="M20 12h2"></path>
+              <path d="m6.34 17.66-1.41 1.41"></path>
+              <path d="m19.07 4.93-1.41 1.41"></path>
+            </svg>
+            ${day.weather}
+          </div>
+          <div class="day-header-top">
+            <span class="day-badge">Day ${day.day}</span>
+            <span class="day-date-text">${day.date}</span>
+          </div>
+          <h2 class="day-title">${day.title}</h2>
+          <p class="day-subtitle">${day.subtitle}</p>
+        </div>
+
+        <!-- Route Info -->
+        ${day.route.distance ? `
+        <div class="card route-card">
+          <div class="route-info">
+            <div class="route-icon">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"></path>
+                <circle cx="7" cy="17" r="2"></circle>
+                <path d="M9 17h6"></path>
+                <circle cx="17" cy="17" r="2"></circle>
+              </svg>
+            </div>
+            <div class="route-text">
+              <div class="route-locations">
+                <span>${day.route.from}</span>
+                <svg class="route-arrow icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                </svg>
+                <span>${day.route.to}</span>
+              </div>
+              <div class="route-meta">
+                <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <span>${day.route.duration}</span>
+                <span style="color: #d1d5db;">·</span>
+                <span>${day.route.distance}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        ` : ''}
+
+        <!-- Map -->
+        <div class="map-container">
+          <div id="map"></div>
+          <div class="map-legend">
+            <div class="legend-item">
+              <div class="legend-dot legend-attraction"></div>
+              <span>景点</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot legend-restaurant"></div>
+              <span>餐厅</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Backup Plan -->
+        ${day.backupPlan ? `
+        <div class="backup-card">
+          <div class="backup-header">
+            <div class="backup-icon">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" x2="12" y1="8" y2="12"></line>
+                <line x1="12" x2="12.01" y1="16" y2="16"></line>
+              </svg>
+            </div>
+            <div>
+              <h4 class="backup-title">${day.backupPlan.title}</h4>
+              <p class="backup-content">${day.backupPlan.content}</p>
+            </div>
+          </div>
+        </div>
+        ` : ''}
+
+        <!-- Unified Timeline -->
+        <div class="card unified-timeline">
+          <h3 class="section-title">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2">
+              <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+              <line x1="16" x2="16" y1="2" y2="6"></line>
+              <line x1="8" x2="8" y1="2" y2="6"></line>
+              <line x1="3" x2="21" y1="10" y2="10"></line>
+            </svg>
+            今日行程
+            <span class="section-badge">${sortedSchedule.length}项</span>
+          </h3>
+          ${sortedSchedule.map((item, index) => renderScheduleItem(item, index, sortedSchedule.length)).join('')}
+        </div>
+      `;
+      
+      setTimeout(() => initMap(day), 100);
+    }
+
+    // 渲染行程项
+    function renderScheduleItem(item, index, total) {
+      const isClickable = item.type === 'attraction' || item.type === 'restaurant';
+      const hasImage = item.type === 'attraction' && attractionImages[item.id];
+      const hasDishImage = item.type === 'restaurant' && dishImages[item.dishes?.[0]];
+      
+      let imageHtml = '';
+      if (hasImage) {
+        imageHtml = `<img class="schedule-image" src="${attractionImages[item.id]}" alt="${item.name}" onerror="this.src='https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop'">`;
+      } else if (hasDishImage) {
+        imageHtml = `<img class="schedule-image" src="${dishImages[item.dishes[0]]}" alt="${item.name}" onerror="this.src='https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=200&h=200&fit=crop'">`;
+      } else {
+        imageHtml = `
+          <div class="schedule-icon-wrapper ${getTypeIconClass(item.type)}">
+            ${getTypeIcon(item.type)}
+          </div>
+        `;
+      }
+      
+      let metaHtml = '';
+      if (item.type === 'restaurant') {
+        metaHtml = `
+          <div class="schedule-meta">
+            <svg class="icon-sm star-icon" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+            <span style="font-weight: 500;">${item.rating}</span>
+            <span style="color: #d1d5db;">·</span>
+            <span>¥${item.price}/人</span>
+            <span style="color: #d1d5db;">·</span>
+            <span class="tag tag-gray">${item.meal}</span>
+          </div>
+        `;
+      } else if (item.type === 'attraction') {
+        metaHtml = `
+          <div class="schedule-meta">
+            <span class="tag tag-green">${item.ticket.includes('免费') ? '免费' : item.ticket.split('，')[0].substring(0, 12)}</span>
+            <span class="tag tag-outline">${item.hours}</span>
+          </div>
+        `;
+      } else if (item.type === 'hotel') {
+        metaHtml = `
+          <div class="schedule-meta">
+            <span style="color: #6b7280;">${item.features}</span>
+          </div>
+        `;
+      } else if (item.content) {
+        metaHtml = `
+          <div class="schedule-meta">
+            <span style="color: #6b7280;">${item.content}</span>
+          </div>
+        `;
+      }
+      
+      // 描述文字
+      let descHtml = '';
+      if (item.description) {
+        descHtml = `<p class="schedule-desc">${item.description}</p>`;
+      }
+      
+      // 菜品标签
+      let tagsHtml = '';
+      if (item.type === 'restaurant' && item.dishes) {
+        tagsHtml = `
+          <div class="schedule-tags">
+            ${item.dishes.slice(0, 2).map(d => `<span class="tag tag-outline">${d}</span>`).join('')}
+          </div>
+        `;
+      }
+      
+      // 停车场信息
+      const parkingHtml = renderParking(item.parking);
+      
+      // 提醒和贴士
+      const alertHtml = renderAlert(item.alert);
+      
+      let tipsHtml = '';
+      if (item.tips && item.tips.length > 0) {
+        tipsHtml = `
+          <div class="schedule-tips">
+            <div class="tips-title">
+              <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
+                <path d="M9 18h6"></path>
+                <path d="M10 22h4"></path>
+              </svg>
+              游玩贴士
+            </div>
+            <div class="tips-list">
+              ${item.tips.map(tip => `
+                <div class="tip-item">
+                  <div class="tip-bullet"></div>
+                  <span>${tip}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+      
+      return `
+        <div class="timeline-item">
+          <div class="timeline-left">
+            <div class="timeline-time">${item.time || ''}</div>
+            <div class="timeline-dot ${getTypeDotClass(item.type)}">
+              ${getTypeIcon(item.type)}
+            </div>
+            <div class="timeline-line"></div>
+          </div>
+          <div class="timeline-content">
+            <div class="schedule-card ${isClickable ? 'schedule-card-clickable' : ''}" 
+                 ${isClickable ? `onclick="${item.type === 'attraction' ? `showAttraction('${item.id}')` : `showRestaurant('${item.id}')`}"` : ''}>
+              <div class="schedule-header">
+                ${imageHtml}
+                <div class="schedule-info">
+                  <span class="schedule-type-badge ${getTypeBadgeClass(item.type)}">${getTypeName(item.type)}</span>
+                  <h4 class="schedule-name">${item.name}</h4>
+                  ${metaHtml}
+                  ${descHtml}
+                  ${tagsHtml}
+                </div>
+              </div>
+              ${parkingHtml}
+              ${alertHtml}
+              ${tipsHtml}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 显示景点详情
+    function showAttraction(id) {
+      const day = itineraryData.find(d => d.day === currentDay);
+      const item = day.schedule.find(s => s.id === id && s.type === 'attraction');
+      if (!item) return;
+
+      document.getElementById('modalTitle').textContent = item.name;
+      document.getElementById('modalSubtitle').innerHTML = `
+        <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        ${item.time}
+      `;
+      
+      document.getElementById('modalContent').innerHTML = `
+        <div class="modal-image">
+          <img src="${attractionImages[id] || 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop'}" 
+               alt="${item.name}" onerror="this.src='https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop'">
+        </div>
+        
+        <div class="modal-section">
+          <h4 class="modal-section-title">景点介绍</h4>
+          <p class="modal-section-text">${item.description}</p>
+        </div>
+        
+        <div class="modal-section">
+          <div class="modal-info-card">
+            <svg class="modal-info-icon" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2">
+              <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <div class="modal-info-content">
+              <div class="modal-info-label">地址</div>
+              <div class="modal-info-value">${item.address}</div>
+            </div>
+          </div>
+          
+          <div class="modal-info-card">
+            <svg class="modal-info-icon" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2">
+              <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"></path>
+            </svg>
+            <div class="modal-info-content">
+              <div class="modal-info-label">门票</div>
+              <div class="modal-info-value">${item.ticket}</div>
+            </div>
+          </div>
+          
+          <div class="modal-info-card">
+            <svg class="modal-info-icon" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2">
+              <rect width="20" height="14" x="2" y="5" rx="2"></rect>
+              <line x1="2" x2="22" y1="10" y2="10"></line>
+            </svg>
+            <div class="modal-info-content">
+              <div class="modal-info-label">预订方式</div>
+              <div class="modal-info-value">${item.booking}</div>
+            </div>
+          </div>
+          
+          <div class="modal-info-card">
+            <svg class="modal-info-icon" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <div class="modal-info-content">
+              <div class="modal-info-label">开放时间</div>
+              <div class="modal-info-value">${item.hours}</div>
+            </div>
+          </div>
+          
+          ${item.parking ? `
+          <div class="modal-info-card" style="background: #f0fdf4;">
+            <svg class="modal-info-icon" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2">
+              <rect width="16" height="16" x="4" y="4" rx="2"></rect>
+              <path d="M9 9h3a2 2 0 0 1 0 4H9V9z"></path>
+              <path d="M9 13v4"></path>
+            </svg>
+            <div class="modal-info-content">
+              <div class="modal-info-label">🚗 停车信息</div>
+              <div class="modal-info-value">${item.parking.name}<br><small style="color:#6b7280;">${item.parking.fee} · ${item.parking.tips || ''}</small></div>
+            </div>
+          </div>
+          ` : ''}
+        </div>
+        
+        ${item.tips ? `
+        <div class="modal-section">
+          <h4 class="modal-section-title">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2">
+              <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
+              <path d="M9 18h6"></path>
+              <path d="M10 22h4"></path>
+            </svg>
+            游玩贴士
+          </h4>
+          <div class="modal-tips">
+            ${item.tips.map((tip, i) => `
+            <div class="modal-tip">
+              <div class="modal-tip-number">${i + 1}</div>
+              <span class="modal-tip-text">${tip}</span>
+            </div>
+            `).join('')}
+          </div>
+        </div>
+        ` : ''}
+      `;
+      
+      document.getElementById('modalOverlay').classList.add('active');
+    }
+
+    // 显示餐厅详情
+    function showRestaurant(id) {
+      const day = itineraryData.find(d => d.day === currentDay);
+      const item = day.schedule.find(s => s.id === id && s.type === 'restaurant');
+      if (!item) return;
+
+      document.getElementById('modalTitle').textContent = item.name;
+      document.getElementById('modalSubtitle').innerHTML = `
+        <span class="tag tag-gray" style="margin-right: 8px;">${item.meal}</span>
+        <svg class="icon-sm star-icon" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+        </svg>
+        ${item.rating} 分
+      `;
+      
+      document.getElementById('modalContent').innerHTML = `
+        <div class="modal-section">
+          <div class="modal-info-card">
+            <svg class="modal-info-icon" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2">
+              <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <div class="modal-info-content">
+              <div class="modal-info-label">地址</div>
+              <div class="modal-info-value">${item.address}</div>
+            </div>
+          </div>
+          
+          <div class="modal-info-card">
+            <svg class="modal-info-icon" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2">
+              <line x1="12" x2="12" y1="2" y2="22"></line>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+            <div class="modal-info-content">
+              <div class="modal-info-label">人均消费</div>
+              <div class="modal-info-value">¥${item.price}/人</div>
+            </div>
+          </div>
+          
+          <div class="modal-info-card">
+            <svg class="modal-info-icon" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <div class="modal-info-content">
+              <div class="modal-info-label">营业时间</div>
+              <div class="modal-info-value">${item.hours}</div>
+            </div>
+          </div>
+          
+          ${item.parking ? `
+          <div class="modal-info-card" style="background: #f0fdf4;">
+            <svg class="modal-info-icon" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2">
+              <rect width="16" height="16" x="4" y="4" rx="2"></rect>
+              <path d="M9 9h3a2 2 0 0 1 0 4H9V9z"></path>
+              <path d="M9 13v4"></path>
+            </svg>
+            <div class="modal-info-content">
+              <div class="modal-info-label">🚗 停车信息</div>
+              <div class="modal-info-value">${item.parking.name}<br><small style="color:#6b7280;">${item.parking.fee} · ${item.parking.tips || ''}</small></div>
+            </div>
+          </div>
+          ` : ''}
+        </div>
+        
+        <div class="modal-section">
+          <h4 class="modal-section-title">特色菜品</h4>
+          <div class="dishes-gallery">
+            ${item.dishes.map(dish => `
+            <div class="dish-item">
+              <img class="dish-image" src="${dishImages[dish] || 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=300&fit=crop'}" 
+                   alt="${dish}" onerror="this.src='https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=300&fit=crop'">
+              <div class="dish-name">${dish}</div>
+            </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+      
+      document.getElementById('modalOverlay').classList.add('active');
+    }
+
+    // 关闭弹窗
+    function closeModal(event) {
+      if (!event || event.target === document.getElementById('modalOverlay')) {
+        document.getElementById('modalOverlay').classList.remove('active');
+      }
+    }
+
+    // 初始化
+    init();
+  </script>
+</body>
+</html>
