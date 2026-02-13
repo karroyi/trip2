@@ -29,10 +29,54 @@
       backdrop-filter: blur(12px);
       border-bottom: 1px solid #f3f4f6;
       box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease, opacity 0.3s ease;
     }
     
-    .header-content {
+    /* Header收起状态 */
+    .header.collapsed .header-content {
+      max-height: 0;
+      padding: 0 16px;
+      overflow: hidden;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    
+    .header.collapsed .day-selector-container {
+      padding: 8px;
+    }
+    
+    /* Header展开状态 */
+    .header .header-content {
+      max-height: 100px;
       padding: 12px 16px;
+      opacity: 1;
+      transition: all 0.3s ease;
+    }
+    
+    /* 迷你header模式 - 只显示日期选择器 */
+    .header.mini-mode {
+      transform: translateY(-60px);
+    }
+    
+    .header.mini-mode .header-content {
+      display: none;
+    }
+    
+    .header.mini-mode .day-selector-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #e5e7eb;
+      padding: 8px;
+      z-index: 1001;
+    }
+    
+    /* 完全隐藏header */
+    .header.hidden {
+      transform: translateY(-100%);
     }
     
     .header-top {
@@ -2632,12 +2676,79 @@
 
     let currentDay = 1;
     let detailMap = null;
+    let lastScrollTop = 0;
+    let scrollThreshold = 50; // 滚动阈值，超过这个距离才触发header收起/展开
 
     // 初始化
     function init() {
       renderDaySelector();
       renderContent();
       updateNavButtons();
+      initScrollHandler();
+    }
+    
+    // 初始化滚动处理
+    function initScrollHandler() {
+      const header = document.querySelector('.header');
+      let scrollTimeout = null;
+      
+      window.addEventListener('scroll', function() {
+        // 清除之前的定时器
+        if (scrollTimeout) {
+          clearTimeout(scrollTimeout);
+        }
+        
+        // 使用requestAnimationFrame优化性能
+        scrollTimeout = setTimeout(function() {
+          const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+          
+          // 如果滚动到顶部附近，始终显示header
+          if (currentScrollTop < 100) {
+            header.classList.remove('collapsed');
+            return;
+          }
+          
+          // 判断滚动方向
+          if (currentScrollTop > lastScrollTop + scrollThreshold) {
+            // 向下滚动 - 收起header
+            header.classList.add('collapsed');
+          } else if (currentScrollTop < lastScrollTop - scrollThreshold) {
+            // 向上滚动 - 展开header
+            header.classList.remove('collapsed');
+          }
+          
+          lastScrollTop = currentScrollTop;
+        }, 10);
+      }, { passive: true });
+      
+      // 触摸事件优化 - 移动端更流畅
+      let touchStartY = 0;
+      document.addEventListener('touchstart', function(e) {
+        touchStartY = e.touches[0].clientY;
+      }, { passive: true });
+      
+      document.addEventListener('touchmove', function(e) {
+        const touchY = e.touches[0].clientY;
+        const diff = touchStartY - touchY;
+        
+        // 快速滑动时更灵敏地响应
+        if (Math.abs(diff) > 30) {
+          const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+          
+          if (currentScrollTop < 100) {
+            header.classList.remove('collapsed');
+            return;
+          }
+          
+          if (diff > 0) {
+            // 手指向上滑 - 收起header
+            header.classList.add('collapsed');
+          } else {
+            // 手指向下滑 - 展开header
+            header.classList.remove('collapsed');
+          }
+        }
+      }, { passive: true });
     }
 
     // 渲染日期选择器
