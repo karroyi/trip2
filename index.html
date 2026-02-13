@@ -1299,6 +1299,303 @@
       color: #166534;
       margin-left: 6px;
     }
+    
+    /* 准备清单按钮 */
+    .prep-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: none;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    
+    .prep-btn:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+    
+    .prep-btn:active {
+      transform: scale(0.98);
+    }
+    
+    /* 准备清单弹窗 */
+    .prep-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 2000;
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    
+    .prep-modal.active {
+      display: flex;
+    }
+    
+    .prep-modal-content {
+      background: white;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow: hidden;
+      animation: slideUp 0.3s ease-out;
+      margin: auto;
+    }
+    
+    .prep-modal-header {
+      padding: 20px;
+      border-bottom: 1px solid #f3f4f6;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+    }
+    
+    .prep-modal-title {
+      font-size: 18px;
+      font-weight: 700;
+    }
+    
+    .prep-modal-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: white;
+    }
+    
+    .prep-modal-close:hover {
+      background: rgba(255,255,255,0.3);
+    }
+    
+    .prep-modal-body {
+      padding: 20px;
+      overflow-y: auto;
+      max-height: calc(90vh - 80px);
+    }
+    
+    /* 准备清单分类 */
+    .prep-section {
+      margin-bottom: 24px;
+    }
+    
+    .prep-section:last-child {
+      margin-bottom: 0;
+    }
+    
+    .prep-section-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #f3f4f6;
+    }
+    
+    .prep-section-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+    
+    .prep-section-icon.booking {
+      background: #fef3c7;
+    }
+    
+    .prep-section-icon.ticket {
+      background: #dbeafe;
+    }
+    
+    .prep-section-icon.item {
+      background: #dcfce7;
+    }
+    
+    .prep-section-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #111827;
+    }
+    
+    .prep-section-count {
+      margin-left: auto;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      background: #f3f4f6;
+      font-size: 12px;
+      font-weight: 500;
+      color: #6b7280;
+    }
+    
+    /* 准备清单项目 */
+    .prep-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px;
+      background: #f9fafb;
+      border-radius: 10px;
+      margin-bottom: 8px;
+      border: 1px solid #e5e7eb;
+    }
+    
+    .prep-item:last-child {
+      margin-bottom: 0;
+    }
+    
+    .prep-item.urgent {
+      background: #fef2f2;
+      border-color: #fecaca;
+    }
+    
+    .prep-item.important {
+      background: #fffbeb;
+      border-color: #fde68a;
+    }
+    
+    .prep-checkbox {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      border: 2px solid #d1d5db;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      margin-top: 2px;
+    }
+    
+    .prep-checkbox:hover {
+      border-color: #10b981;
+    }
+    
+    .prep-checkbox.checked {
+      background: #10b981;
+      border-color: #10b981;
+      color: white;
+    }
+    
+    .prep-item-content {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    .prep-item-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: #111827;
+      margin-bottom: 4px;
+    }
+    
+    .prep-checkbox.checked + .prep-item-content .prep-item-title {
+      text-decoration: line-through;
+      color: #9ca3af;
+    }
+    
+    .prep-item-desc {
+      font-size: 12px;
+      color: #6b7280;
+      line-height: 1.4;
+    }
+    
+    .prep-item-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 6px;
+      flex-wrap: wrap;
+    }
+    
+    .prep-item-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+    
+    .prep-item-tag.day {
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+    
+    .prep-item-tag.price {
+      background: #fef3c7;
+      color: #92400e;
+    }
+    
+    .prep-item-tag.urgent {
+      background: #fef2f2;
+      color: #dc2626;
+    }
+    
+    .prep-item-tag.method {
+      background: #f3e8ff;
+      color: #7c3aed;
+    }
+    
+    /* 进度条 */
+    .prep-progress {
+      margin-bottom: 20px;
+    }
+    
+    .prep-progress-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    
+    .prep-progress-text {
+      font-size: 14px;
+      font-weight: 500;
+      color: #374151;
+    }
+    
+    .prep-progress-count {
+      font-size: 12px;
+      color: #6b7280;
+    }
+    
+    .prep-progress-bar {
+      height: 8px;
+      background: #e5e7eb;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    
+    .prep-progress-fill {
+      height: 100%;
+      background: linear-gradient(135deg, #10b981, #059669);
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
   </style>
 </head>
 <body>
@@ -1312,15 +1609,25 @@
           </svg>
           <span class="logo-text">亲子自驾游</span>
         </div>
-        <span class="badge badge-orange">
-          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-            <line x1="16" x2="16" y1="2" y2="6"></line>
-            <line x1="8" x2="8" y1="2" y2="6"></line>
-            <line x1="3" x2="21" y1="10" y2="10"></line>
-          </svg>
-          8天7晚
-        </span>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <button class="prep-btn" onclick="openPrepModal()">
+            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"></path>
+              <rect width="6" height="4" x="9" y="3" rx="1"></rect>
+              <path d="m9 12 2 2 4-4"></path>
+            </svg>
+            出行准备
+          </button>
+          <span class="badge badge-orange">
+            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+              <line x1="16" x2="16" y1="2" y2="6"></line>
+              <line x1="8" x2="8" y1="2" y2="6"></line>
+              <line x1="3" x2="21" y1="10" y2="10"></line>
+            </svg>
+            8天7晚
+          </span>
+        </div>
       </div>
       <p class="header-subtitle">深圳出发 · 丹霞山 → 莽山 → 永州 → 衡山 → 英德 → 深圳<br><small style="color:#9ca3af;font-weight:normal;">📍 点击景点/餐厅地址可查看地图位置</small></p>
     </div>
@@ -1359,6 +1666,17 @@
       <div class="map-modal-body">
         <div id="detailMap"></div>
       </div>
+    </div>
+  </div>
+
+  <!-- 准备清单弹窗 -->
+  <div class="prep-modal" id="prepModal" onclick="closePrepModal(event)">
+    <div class="prep-modal-content" onclick="event.stopPropagation()">
+      <div class="prep-modal-header">
+        <span class="prep-modal-title">📋 出行前准备清单</span>
+        <button class="prep-modal-close" onclick="closePrepModal()">&times;</button>
+      </div>
+      <div class="prep-modal-body" id="prepModalBody"></div>
     </div>
   </div>
 
@@ -1413,11 +1731,12 @@
     const itineraryData = [
       {
         day: 1,
-        date: "2.18 周二",
+        date: "2.18 周三",
+        weatherDate: "2026-02-18",
         title: "深圳→韶关丹霞山",
         subtitle: "地质探险",
         route: { from: "深圳", to: "丹霞山", duration: "4小时", distance: "280km" },
-        weather: "晴天 8-18℃",
+        weather: "加载中...",
         startCoord: [22.5431, 114.0579],
         endCoord: [24.9486, 113.7394],
         schedule: [
@@ -1606,11 +1925,12 @@
       },
       {
         day: 2,
-        date: "2.19 周三",
+        date: "2.19 周四",
+        weatherDate: "2026-02-19",
         title: "丹霞山日出→莽山",
         subtitle: "观日祈福·云海温泉",
         route: { from: "丹霞山", to: "莽山", duration: "2.5小时", distance: "180km" },
-        weather: "晴天 6-16℃",
+        weather: "加载中...",
         startCoord: [24.9486, 113.7394],
         endCoord: [24.9932, 112.8672],
         schedule: [
@@ -1825,11 +2145,12 @@
       },
       {
         day: 3,
-        date: "2.20 周四",
+        date: "2.20 周五",
+        weatherDate: "2026-02-20",
         title: "莽山→永州",
         subtitle: "古城文化",
         route: { from: "莽山", to: "永州", duration: "2小时", distance: "150km" },
-        weather: "多云 8-17℃",
+        weather: "加载中...",
         startCoord: [24.9932, 112.8672],
         endCoord: [26.2215, 111.6289],
         schedule: [
@@ -1988,11 +2309,12 @@
       },
       {
         day: 4,
-        date: "2.21 周五",
+        date: "2.21 周六",
+        weatherDate: "2026-02-21",
         title: "永州→衡山",
         subtitle: "文化之旅",
         route: { from: "永州", to: "衡山", duration: "3小时", distance: "220km" },
-        weather: "晴天 5-14℃",
+        weather: "加载中...",
         startCoord: [26.2215, 111.6289],
         endCoord: [27.2345, 112.7389],
         schedule: [
@@ -2151,11 +2473,12 @@
       },
       {
         day: 5,
-        date: "2.22 周六",
+        date: "2.22 周日",
+        weatherDate: "2026-02-22",
         title: "衡山山脚",
         subtitle: "虔诚祈福",
         route: { from: "酒店", to: "南岳大庙", duration: "10分钟", distance: "2km" },
-        weather: "晴天 5-14℃",
+        weather: "加载中...",
         startCoord: [27.2345, 112.7389],
         endCoord: [27.2321, 112.7356],
         schedule: [
@@ -2289,11 +2612,12 @@
       },
       {
         day: 6,
-        date: "2.23 周日",
+        date: "2.23 周一",
+        weatherDate: "2026-02-23",
         title: "衡山登顶",
         subtitle: "祝融峰祈福",
         route: { from: "游客中心", to: "祝融峰", duration: "索道40分钟", distance: "" },
-        weather: "小雨 5-14℃（60%概率）",
+        weather: "加载中...",
         startCoord: [27.2345, 112.7389],
         endCoord: [27.2889, 112.6834],
         backupPlan: {
@@ -2451,11 +2775,12 @@
       },
       {
         day: 7,
-        date: "2.24 周一",
+        date: "2.24 周二",
+        weatherDate: "2026-02-24",
         title: "衡山→英德",
         subtitle: "童话王国",
         route: { from: "衡山", to: "英德", duration: "4小时", distance: "320km" },
-        weather: "晴天 10-20℃",
+        weather: "加载中...",
         startCoord: [27.2345, 112.7389],
         endCoord: [24.1856, 113.4521],
         schedule: [
@@ -2581,11 +2906,12 @@
       },
       {
         day: 8,
-        date: "2.25 周二",
+        date: "2.25 周三",
+        weatherDate: "2026-02-25",
         title: "英德→深圳",
         subtitle: "温馨返程",
         route: { from: "英德", to: "深圳", duration: "2.5小时", distance: "200km" },
-        weather: "晴天 12-22℃",
+        weather: "加载中...",
         startCoord: [24.1856, 113.4521],
         endCoord: [22.5431, 114.0579],
         schedule: [
@@ -2679,12 +3005,369 @@
     let lastScrollTop = 0;
     let scrollThreshold = 50; // 滚动阈值，超过这个距离才触发header收起/展开
 
+    // 天气代码映射 (WMO Weather interpretation codes)
+    // https://open-meteo.com/en/docs
+    function getWeatherInfo(code) {
+      const weatherMap = {
+        0: { text: '晴天', icon: '☀️' },
+        1: { text: '晴间多云', icon: '🌤️' },
+        2: { text: '多云', icon: '⛅' },
+        3: { text: '阴天', icon: '☁️' },
+        45: { text: '雾', icon: '🌫️' },
+        48: { text: '雾凇', icon: '🌫️' },
+        51: { text: '小雨', icon: '🌧️' },
+        53: { text: '小雨', icon: '🌧️' },
+        55: { text: '小雨', icon: '🌧️' },
+        56: { text: '冻雨', icon: '🌨️' },
+        57: { text: '冻雨', icon: '🌨️' },
+        61: { text: '小雨', icon: '🌧️' },
+        63: { text: '中雨', icon: '🌧️' },
+        65: { text: '大雨', icon: '🌧️' },
+        66: { text: '冻雨', icon: '🌨️' },
+        67: { text: '冻雨', icon: '🌨️' },
+        71: { text: '小雪', icon: '🌨️' },
+        73: { text: '中雪', icon: '🌨️' },
+        75: { text: '大雪', icon: '❄️' },
+        77: { text: '雪粒', icon: '❄️' },
+        80: { text: '阵雨', icon: '🌦️' },
+        81: { text: '阵雨', icon: '🌦️' },
+        82: { text: '暴雨', icon: '⛈️' },
+        85: { text: '阵雪', icon: '🌨️' },
+        86: { text: '阵雪', icon: '🌨️' },
+        95: { text: '雷暴', icon: '⛈️' },
+        96: { text: '雷暴冰雹', icon: '⛈️' },
+        99: { text: '雷暴冰雹', icon: '⛈️' }
+      };
+      return weatherMap[code] || { text: '未知', icon: '🌡️' };
+    }
+
+    // 从Open-Meteo API获取天气数据
+    // 使用免费无需API Key的天气API，支持CORS，可从静态文件直接访问
+    async function fetchWeatherData() {
+      const weatherPromises = itineraryData.map(async (day) => {
+        if (!day.endCoord || !day.weatherDate) return;
+        
+        const [lat, lon] = day.endCoord;
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=Asia/Shanghai&start_date=${day.weatherDate}&end_date=${day.weatherDate}`;
+        
+        try {
+          const response = await fetch(url);
+          if (!response.ok) throw new Error('Weather API error');
+          const data = await response.json();
+          
+          if (data.daily && data.daily.temperature_2m_max && data.daily.temperature_2m_max.length > 0) {
+            const maxTemp = Math.round(data.daily.temperature_2m_max[0]);
+            const minTemp = Math.round(data.daily.temperature_2m_min[0]);
+            const weatherCode = data.daily.weathercode[0];
+            const weatherInfo = getWeatherInfo(weatherCode);
+            
+            day.weather = `${weatherInfo.icon} ${weatherInfo.text} ${minTemp}-${maxTemp}℃`;
+            day.weatherRaw = {
+              maxTemp,
+              minTemp,
+              code: weatherCode,
+              text: weatherInfo.text
+            };
+          }
+        } catch (error) {
+          console.warn(`Failed to fetch weather for day ${day.day}:`, error);
+          // 保留默认显示
+          day.weather = '天气数据获取失败';
+        }
+      });
+      
+      await Promise.all(weatherPromises);
+    }
+
     // 初始化
-    function init() {
+    async function init() {
+      // 先渲染页面框架（显示"加载中..."）
       renderDaySelector();
       renderContent();
       updateNavButtons();
       initScrollHandler();
+      
+      // 异步获取天气数据
+      try {
+        await fetchWeatherData();
+        // 天气数据获取后，重新渲染页面更新天气显示
+        renderContent();
+      } catch (error) {
+        console.error('Failed to fetch weather data:', error);
+      }
+    }
+    
+    // ========== 准备清单数据 ==========
+    const prepListData = {
+      // 需要提前预约的景点
+      bookings: [
+        {
+          id: 'danxia',
+          name: '丹霞山景区门票',
+          day: 1,
+          price: '成人100元，儿童半价',
+          method: '「丹霞山景区」公众号或美团',
+          urgent: true,
+          desc: '建议提前1-2天预订，旺季可能售罄'
+        },
+        {
+          id: 'mangshan',
+          name: '莽山五指峰景区',
+          day: 2,
+          price: '门票+索道280元，儿童140元',
+          method: '「莽山五指峰景区」公众号或携程',
+          urgent: true,
+          desc: '索道票建议提前预订，现场可能排队'
+        },
+        {
+          id: 'nanyue-temple',
+          name: '南岳大庙',
+          day: 5,
+          price: '成人40元，儿童半价',
+          method: '「南岳衡山」公众号预约',
+          urgent: true,
+          desc: '周末人流量大，建议提前预约'
+        },
+        {
+          id: 'hengshan',
+          name: '衡山景区（祝融峰）',
+          day: 6,
+          price: '门票110元+环保车78元',
+          method: '「南岳衡山」公众号预约',
+          urgent: true,
+          desc: '索道票旺季需提前预订，环保车票可现场购买'
+        },
+        {
+          id: 'chocolate-diy',
+          name: '巧克力DIY体验',
+          day: 7,
+          price: '98元/人',
+          method: '「奥园英德巧克力王国」公众号',
+          urgent: false,
+          desc: '需提前预约时段，建议穿深色衣服'
+        },
+        {
+          id: 'water-world',
+          name: '巧克力王国嬉水世界',
+          day: 7,
+          price: '成人168元，儿童88元',
+          method: '入住酒店客人优惠价',
+          urgent: false,
+          desc: '入住酒店客人可享受优惠价'
+        }
+      ],
+      // 需要提前购买的门票
+      tickets: [
+        {
+          id: 'shuishang-danxia',
+          name: '水上丹霞游船',
+          day: 1,
+          price: '成人90元，儿童45元',
+          method: '现场购票或美团',
+          desc: '傍晚游船可观赏晚霞，建议17:30前到达码头'
+        },
+        {
+          id: 'lingling',
+          name: '柳子庙',
+          day: 3,
+          price: '成人25元，儿童半价',
+          method: '现场购票',
+          desc: '人流量适中，可现场购票'
+        },
+        {
+          id: 'tea-garden',
+          name: '积庆里红茶谷',
+          day: 8,
+          price: '免费参观',
+          method: '无需购票',
+          desc: '免费参观，茶园采摘体验需另付费'
+        }
+      ],
+      // 必带物品清单
+      items: {
+        clothing: [
+          { name: '保暖外套/冲锋衣', important: true, desc: '山顶气温比山下低8-10度，莽山、衡山必备' },
+          { name: '速干衣裤', important: false, desc: '登山出汗后速干，舒适透气' },
+          { name: '换洗衣物', important: true, desc: '8天行程，建议带够换洗衣物' },
+          { name: '泳衣泳裤', important: false, desc: '莽山温泉、巧克力王国嬉水世界使用' },
+          { name: '儿童保暖衣物', important: true, desc: '儿童体温调节能力弱，务必带厚外套' },
+          { name: '舒适运动鞋', important: true, desc: '多日登山，建议穿磨合好的运动鞋' },
+          { name: '拖鞋', important: false, desc: '酒店休息、温泉使用' }
+        ],
+        gear: [
+          { name: '手电筒/头灯', important: true, desc: 'Day2看日出需凌晨5:20出发，天未亮需照明' },
+          { name: '充电宝', important: true, desc: '全天户外活动，手机拍照耗电快' },
+          { name: '雨具（雨衣/雨伞）', important: true, desc: '山区天气多变，雨衣更适合登山' },
+          { name: '防晒霜', important: true, desc: '户外活动必备，保护皮肤' },
+          { name: '太阳镜/遮阳帽', important: false, desc: '防晒必备，山顶紫外线较强' },
+          { name: '登山杖', important: false, desc: '减轻膝盖压力，儿童也可使用' },
+          { name: '保温水壶', important: true, desc: '山上热水补给有限，自带热水' }
+        ],
+        medicine: [
+          { name: '常用药（感冒/肠胃/止痛）', important: true, desc: '旅途中常见不适，提前备好' },
+          { name: '晕车药', important: false, desc: '山路蜿蜒，儿童易晕车' },
+          { name: '创可贴/消毒棉片', important: true, desc: '户外活动小擦伤处理' },
+          { name: '防蚊虫喷雾', important: false, desc: '山区蚊虫较多' },
+          { name: '儿童常用药', important: true, desc: '退烧药、止泻药等' }
+        ],
+        documents: [
+          { name: '身份证', important: true, desc: '景区购票、酒店入住必备' },
+          { name: '儿童证件/户口本', important: true, desc: '儿童无身份证需携带户口本' },
+          { name: '驾驶证/行驶证', important: true, desc: '自驾出行必备' },
+          { name: '保险单', important: false, desc: '建议购买旅游意外险' }
+        ],
+        other: [
+          { name: '纸巾/湿巾', important: true, desc: '户外活动必备' },
+          { name: '零食/干粮', important: true, desc: '登山途中补充能量' },
+          { name: '垃圾袋', important: false, desc: '保护环境，带走垃圾' },
+          { name: '相机/三脚架', important: false, desc: '日出日落拍摄神器' },
+          { name: '儿童玩具/绘本', important: false, desc: '长途车程、酒店休息时使用' }
+        ]
+      }
+    };
+    
+    // 准备清单勾选状态（存储在localStorage）
+    let prepCheckedItems = JSON.parse(localStorage.getItem('prepCheckedItems') || '{}');
+    
+    // 打开准备清单弹窗
+    function openPrepModal() {
+      renderPrepList();
+      document.getElementById('prepModal').classList.add('active');
+    }
+    
+    // 关闭准备清单弹窗
+    function closePrepModal(event) {
+      if (!event || event.target === document.getElementById('prepModal')) {
+        document.getElementById('prepModal').classList.remove('active');
+      }
+    }
+    
+    // 切换准备清单项目勾选状态
+    function togglePrepItem(id) {
+      prepCheckedItems[id] = !prepCheckedItems[id];
+      localStorage.setItem('prepCheckedItems', JSON.stringify(prepCheckedItems));
+      renderPrepList();
+    }
+    
+    // 渲染准备清单
+    function renderPrepList() {
+      const container = document.getElementById('prepModalBody');
+      
+      // 计算进度
+      const allItems = [
+        ...prepListData.bookings.map(b => 'booking-' + b.id),
+        ...prepListData.tickets.map(t => 'ticket-' + t.id),
+        ...Object.entries(prepListData.items).flatMap(([category, items]) => 
+          items.map(item => 'item-' + category + '-' + item.name)
+        )
+      ];
+      const checkedCount = allItems.filter(id => prepCheckedItems[id]).length;
+      const progress = Math.round((checkedCount / allItems.length) * 100);
+      
+      let html = `
+        <!-- 进度条 -->
+        <div class="prep-progress">
+          <div class="prep-progress-header">
+            <span class="prep-progress-text">准备进度</span>
+            <span class="prep-progress-count">${checkedCount}/${allItems.length} 项已完成</span>
+          </div>
+          <div class="prep-progress-bar">
+            <div class="prep-progress-fill" style="width: ${progress}%"></div>
+          </div>
+        </div>
+        
+        <!-- 需要提前预约 -->
+        <div class="prep-section">
+          <div class="prep-section-header">
+            <span class="prep-section-icon booking">📅</span>
+            <span class="prep-section-title">需要提前预约</span>
+            <span class="prep-section-count">${prepListData.bookings.length}项</span>
+          </div>
+          ${prepListData.bookings.map(item => renderPrepItem('booking', item)).join('')}
+        </div>
+        
+        <!-- 需要提前购票 -->
+        <div class="prep-section">
+          <div class="prep-section-header">
+            <span class="prep-section-icon ticket">🎟️</span>
+            <span class="prep-section-title">需要提前购票</span>
+            <span class="prep-section-count">${prepListData.tickets.length}项</span>
+          </div>
+          ${prepListData.tickets.map(item => renderPrepItem('ticket', item)).join('')}
+        </div>
+        
+        <!-- 必带物品 -->
+        ${Object.entries(prepListData.items).map(([category, items]) => `
+          <div class="prep-section">
+            <div class="prep-section-header">
+              <span class="prep-section-icon item">${getCategoryIcon(category)}</span>
+              <span class="prep-section-title">${getCategoryName(category)}</span>
+              <span class="prep-section-count">${items.length}项</span>
+            </div>
+            ${items.map(item => renderPrepItem('item-' + category, item)).join('')}
+          </div>
+        `).join('')}
+      `;
+      
+      container.innerHTML = html;
+    }
+    
+    // 渲染单个准备清单项目
+    function renderPrepItem(type, item) {
+      const id = type + '-' + (item.id || item.name);
+      const isChecked = prepCheckedItems[id];
+      const itemClass = item.urgent ? 'urgent' : (item.important ? 'important' : '');
+      
+      let metaHtml = '';
+      if (item.day) {
+        metaHtml += `<span class="prep-item-tag day">Day ${item.day}</span>`;
+      }
+      if (item.price) {
+        metaHtml += `<span class="prep-item-tag price">${item.price}</span>`;
+      }
+      if (item.method) {
+        metaHtml += `<span class="prep-item-tag method">${item.method}</span>`;
+      }
+      if (item.urgent) {
+        metaHtml += `<span class="prep-item-tag urgent">建议提前预约</span>`;
+      }
+      
+      return `
+        <div class="prep-item ${itemClass}">
+          <div class="prep-checkbox ${isChecked ? 'checked' : ''}" onclick="togglePrepItem('${id}')">
+            ${isChecked ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:14px;height:14px"><polyline points="20 6 9 17 4 12"></polyline></svg>' : ''}
+          </div>
+          <div class="prep-item-content">
+            <div class="prep-item-title">${item.name}</div>
+            ${item.desc ? `<div class="prep-item-desc">${item.desc}</div>` : ''}
+            ${metaHtml ? `<div class="prep-item-meta">${metaHtml}</div>` : ''}
+          </div>
+        </div>
+      `;
+    }
+    
+    // 获取分类图标
+    function getCategoryIcon(category) {
+      const icons = {
+        clothing: '👕',
+        gear: '🎒',
+        medicine: '💊',
+        documents: '📄',
+        other: '📦'
+      };
+      return icons[category] || '📋';
+    }
+    
+    // 获取分类名称
+    function getCategoryName(category) {
+      const names = {
+        clothing: '衣物装备',
+        gear: '户外用品',
+        medicine: '常用药品',
+        documents: '证件资料',
+        other: '其他物品'
+      };
+      return names[category] || category;
     }
     
     // 初始化滚动处理
