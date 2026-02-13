@@ -246,56 +246,6 @@
       margin-top: 4px;
     }
     
-    /* Map Container */
-    .map-container {
-      width: 100%;
-      height: 280px;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid #e5e7eb;
-      margin-bottom: 16px;
-      position: relative;
-    }
-    
-    #map {
-      width: 100%;
-      height: 100%;
-    }
-    
-    .map-legend {
-      position: absolute;
-      bottom: 10px;
-      left: 10px;
-      z-index: 1000;
-      background: rgba(255,255,255,0.95);
-      padding: 6px 12px;
-      border-radius: 8px;
-      font-size: 12px;
-      display: flex;
-      gap: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    
-    .legend-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-    }
-    
-    .legend-attraction {
-      background: #f97316;
-    }
-    
-    .legend-restaurant {
-      background: #eab308;
-    }
-    
     .section-title {
       display: flex;
       align-items: center;
@@ -588,12 +538,6 @@
       color: #4b5563;
     }
     
-    .parking-detail-item {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    
     .parking-badge {
       display: inline-flex;
       padding: 2px 6px;
@@ -610,11 +554,6 @@
     .parking-badge-nearby {
       background: #fef9c3;
       color: #854d0e;
-    }
-    
-    .parking-badge-free {
-      background: #dbeafe;
-      color: #1e40af;
     }
     
     .parking-tip {
@@ -1016,6 +955,78 @@
       color: #374151;
     }
     
+    /* Clickable Address */
+    .address-clickable {
+      color: #2563eb;
+      cursor: pointer;
+      text-decoration: underline;
+      text-decoration-style: dashed;
+    }
+    
+    .address-clickable:hover {
+      color: #1d4ed8;
+    }
+    
+    /* Map Modal */
+    .map-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 3000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .map-modal.active {
+      display: flex;
+    }
+    
+    .map-modal-content {
+      background: white;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 500px;
+      max-height: 80vh;
+      overflow: hidden;
+    }
+    
+    .map-modal-header {
+      padding: 16px;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .map-modal-title {
+      font-size: 16px;
+      font-weight: 600;
+    }
+    
+    .map-modal-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #f3f4f6;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: #6b7280;
+    }
+    
+    .map-modal-body {
+      height: 350px;
+    }
+    
+    .map-modal-body #detailMap {
+      width: 100%;
+      height: 100%;
+    }
+    
     .modal-tips {
       display: flex;
       flex-direction: column;
@@ -1047,6 +1058,7 @@
       color: #4b5563;
     }
     
+    /* Dishes Gallery */
     .dishes-gallery {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -1055,19 +1067,32 @@
     
     .dish-item {
       text-align: center;
+      background: #f9fafb;
+      border-radius: 8px;
+      overflow: hidden;
     }
     
     .dish-image {
       width: 100%;
       height: 100px;
-      border-radius: 8px;
       object-fit: cover;
-      margin-bottom: 6px;
     }
     
     .dish-name {
       font-size: 12px;
-      color: #4b5563;
+      color: #374151;
+      padding: 6px;
+      font-weight: 500;
+    }
+    
+    .dish-badge {
+      display: inline-block;
+      background: #fef3c7;
+      color: #92400e;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-bottom: 4px;
     }
     
     .icon {
@@ -1083,6 +1108,152 @@
     .icon-lg {
       width: 24px;
       height: 24px;
+    }
+    
+    /* Dianping Badge */
+    .dianping-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #fef3c7;
+      color: #92400e;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    
+    .dianping-badge svg {
+      width: 14px;
+      height: 14px;
+    }
+    
+    /* Free Time Recommendations */
+    .free-time-card {
+      background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
+      border: 1px solid #86efac;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    
+    .free-time-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    
+    .free-time-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #dcfce7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #16a34a;
+    }
+    
+    .free-time-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #166534;
+    }
+    
+    .free-time-subtitle {
+      font-size: 12px;
+      color: #4b5563;
+    }
+    
+    .free-time-section {
+      margin-bottom: 12px;
+    }
+    
+    .free-time-section:last-child {
+      margin-bottom: 0;
+    }
+    
+    .free-time-section-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .free-time-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    
+    .free-time-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 8px 10px;
+      background: white;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #4b5563;
+      border: 1px solid #e5e7eb;
+    }
+    
+    .free-time-item:hover {
+      background: #f9fafb;
+      border-color: #d1d5db;
+    }
+    
+    .free-time-item-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 12px;
+    }
+    
+    .free-time-item-icon.attraction {
+      background: #fef3c7;
+      color: #b45309;
+    }
+    
+    .free-time-item-icon.food {
+      background: #fce7f3;
+      color: #be185d;
+    }
+    
+    .free-time-item-content {
+      flex: 1;
+    }
+    
+    .free-time-item-name {
+      font-weight: 500;
+      color: #111827;
+      margin-bottom: 2px;
+    }
+    
+    .free-time-item-desc {
+      font-size: 12px;
+      color: #6b7280;
+      line-height: 1.4;
+    }
+    
+    .free-time-tag {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 500;
+      background: #dcfce7;
+      color: #166534;
+      margin-left: 6px;
     }
   </style>
 </head>
@@ -1107,7 +1278,7 @@
           8天7晚
         </span>
       </div>
-      <p class="header-subtitle">深圳出发 · 丹霞山 → 莽山 → 永州 → 衡山 → 英德 → 深圳<br><small style="color:#9ca3af;font-weight:normal;">⚠️ 餐厅信息仅供参考，建议通过大众点评/美团确认后前往</small></p>
+      <p class="header-subtitle">深圳出发 · 丹霞山 → 莽山 → 永州 → 衡山 → 英德 → 深圳<br><small style="color:#9ca3af;font-weight:normal;">📍 点击景点/餐厅地址可查看地图位置</small></p>
     </div>
     
     <div class="day-selector-container">
@@ -1122,7 +1293,7 @@
     <button class="nav-btn nav-btn-next" id="nextBtn" onclick="changeDay(1)">后一天</button>
   </div>
 
-  <!-- Modal -->
+  <!-- Detail Modal -->
   <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
     <div class="modal" onclick="event.stopPropagation()">
       <div class="modal-header">
@@ -1131,6 +1302,19 @@
         <p class="modal-subtitle" id="modalSubtitle"></p>
       </div>
       <div class="modal-content" id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- Map Modal -->
+  <div class="map-modal" id="mapModal" onclick="closeMapModal(event)">
+    <div class="map-modal-content" onclick="event.stopPropagation()">
+      <div class="map-modal-header">
+        <span class="map-modal-title" id="mapModalTitle">位置信息</span>
+        <button class="map-modal-close" onclick="closeMapModal()">&times;</button>
+      </div>
+      <div class="map-modal-body">
+        <div id="detailMap"></div>
+      </div>
     </div>
   </div>
 
@@ -1157,44 +1341,31 @@
       'tea-garden': 'https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=800&h=600&fit=crop'
     };
     
-    // 菜品图片
+    // 推荐菜图片（使用通用美食图片）
     const dishImages = {
-      '客家酿豆腐': 'https://images.unsplash.com/photo-1582576163090-09d3b6f8a969?w=400&h=300&fit=crop',
-      '山坑鱼': 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=400&h=300&fit=crop',
-      '儿童蒸蛋': 'https://images.unsplash.com/photo-1482049016gy4-70cfb2a2cd3c?w=400&h=300&fit=crop',
-      '免辣剁椒鱼头': 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=400&h=300&fit=crop',
-      '腊肉炒笋': 'https://images.unsplash.com/photo-1544025162-d76694265947?w=400&h=300&fit=crop',
-      '清炒时蔬': 'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&h=300&fit=crop',
+      '南岳豆腐煲': 'https://images.unsplash.com/photo-1582576163090-09d3b6f8a969?w=400&h=300&fit=crop',
+      '酱辣椒炒土鸡': 'https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=400&h=300&fit=crop',
+      '南岳腐乳': 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=300&fit=crop',
+      '柴火腊肉': 'https://images.unsplash.com/photo-1544025162-d76694265947?w=400&h=300&fit=crop',
+      '衡东脆肚': 'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400&h=300&fit=crop',
+      '永州血鸭': 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=400&h=300&fit=crop',
+      '东安鸡': 'https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=400&h=300&fit=crop',
+      '永州喝螺': 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=300&fit=crop',
       '莽山腊肉': 'https://images.unsplash.com/photo-1558030006-450675393462?w=400&h=300&fit=crop',
       '山野菜': 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&h=300&fit=crop',
       '土鸡汤': 'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400&h=300&fit=crop',
-      '永州血鸭': 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=400&h=300&fit=crop',
-      '东安鸡': 'https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=400&h=300&fit=crop',
-      '蒸蛋': 'https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=400&h=300&fit=crop',
-      '酿豆腐': 'https://images.unsplash.com/photo-1582576163090-09d3b6f8a969?w=400&h=300&fit=crop',
-      '蒸蛋羹': 'https://images.unsplash.com/photo-1482049016gy4-70cfb2a2cd3c?w=400&h=300&fit=crop',
-      '永州喝螺': 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=300&fit=crop',
-      '青菜': 'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&h=300&fit=crop',
-      '衡山腊肉火锅': 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400&h=300&fit=crop',
-      '豆腐圆子': 'https://images.unsplash.com/photo-1582576163090-09d3b6f8a969?w=400&h=300&fit=crop',
-      '素火腿': 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=300&fit=crop',
-      '罗汉斋': 'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&h=300&fit=crop',
-      '素蒸蛋': 'https://images.unsplash.com/photo-1482049016gy4-70cfb2a2cd3c?w=400&h=300&fit=crop',
-      '衡山雪鸭': 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=400&h=300&fit=crop',
-      '拆骨肉荷包蛋': 'https://images.unsplash.com/photo-1482049016gy4-70cfb2a2cd3c?w=400&h=300&fit=crop',
-      '豆腐汤': 'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400&h=300&fit=crop',
-      '野菜炒饭': 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=400&h=300&fit=crop',
-      '蒸红薯': 'https://images.unsplash.com/photo-1596097635121-14b63b7bbfc2?w=400&h=300&fit=crop',
-      '土鸡火锅': 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400&h=300&fit=crop',
-      '农家小炒': 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=400&h=300&fit=crop',
-      '时蔬': 'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&h=300&fit=crop',
-      '巧克力主题儿童套餐': 'https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=400&h=300&fit=crop',
+      '客家酿豆腐': 'https://images.unsplash.com/photo-1582576163090-09d3b6f8a969?w=400&h=300&fit=crop',
+      '山坑鱼': 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=400&h=300&fit=crop',
+      '丹霞山水酿豆腐': 'https://images.unsplash.com/photo-1582576163090-09d3b6f8a969?w=400&h=300&fit=crop',
+      '丹霞山走地鸡': 'https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=400&h=300&fit=crop',
+      '巧克力DIY套餐': 'https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=400&h=300&fit=crop',
       '红茶排骨': 'https://images.unsplash.com/photo-1544025162-d76694265947?w=400&h=300&fit=crop',
       '清远鸡煲': 'https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=400&h=300&fit=crop',
-      '腐竹': 'https://images.unsplash.com/photo-1582576163090-09d3b6f8a969?w=400&h=300&fit=crop'
+      '素火腿': 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=300&fit=crop',
+      '罗汉斋': 'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&h=300&fit=crop'
     };
 
-    // 行程数据（含停车场信息）
+    // 行程数据（含真实餐馆信息和坐标）
     const itineraryData = [
       {
         day: 1,
@@ -1225,7 +1396,7 @@
               type: "own",
               fee: "10元/次",
               capacity: "大型停车场，约500个车位",
-              tips: "景区正门停车场，位置充足，建议停在靠近入口处"
+              tips: "景区正门停车场，位置充足"
             }
           },
           { 
@@ -1233,124 +1404,277 @@
             timeEnd: "13:30",
             type: "restaurant",
             id: "danxia-food",
-            name: "丹霞农家菜（南门总店）",
+            name: "丹霞印象农家菜餐厅",
             meal: "午餐",
-            rating: 4.9,
+            rating: 4.6,
             price: 55,
-            address: "丹霞山景区南门入口处",
-            dishes: ["客家酿豆腐", "山坑鱼", "儿童蒸蛋"],
+            address: "韶关市仁化县丹霞山景区内",
+            dishes: ["丹霞山水酿豆腐", "丹霞山走地鸡", "山坑鱼", "客家酿豆腐"],
+            recommendDishes: ["丹霞山水酿豆腐", "丹霞山走地鸡", "山坑鱼"],
             hours: "10:00-20:00",
             coord: [24.9501, 113.7410],
+            dianpingUrl: "https://m.dianping.com/shop/H8hP1sXJfOqKTXPT",
             parking: {
               name: "景区南门停车场",
               type: "own",
               fee: "与景区共用，已购票免费",
-              distance: "步行约2分钟",
-              tips: "就在餐厅门口，用餐期间可免费停放"
+              distance: "步行约2分钟"
             },
-            alert: { type: "tip", title: "推荐菜品", text: "客家酿豆腐口感嫩滑，适合小朋友；山坑鱼鲜美无刺" }
+            alert: { type: "tip", title: "推荐菜品", text: "丹霞山水酿豆腐口感嫩滑，山坑鱼鲜美无刺" }
           },
           { 
-            time: "13:30", 
+            time: "14:00", 
             timeEnd: "14:30",
             type: "attraction",
-            id: "danxia-geo",
-            name: "丹霞山地质科普馆",
-            description: "免费参观，儿童互动区学习丹霞地貌形成过程，建议给孩子准备放大镜观察岩石标本",
-            address: "广东省韶关市仁化县丹霞山景区内",
-            ticket: "免费",
-            booking: "现场参观，无需预约",
-            tips: ["建议预留1小时参观时间", "儿童互动区有专人讲解", "可领取科普手册"],
-            hours: "09:00-17:00",
-            coord: [24.9486, 113.7394],
-            parking: {
-              name: "景区内部停车场",
-              type: "own",
-              fee: "包含在景区门票内",
-              distance: "科普馆就在停车场旁边",
-              tips: "无需额外停车，步行即可到达"
-            },
-            alert: { type: "info", title: "亲子互动", text: "可以让孩子带着放大镜观察岩石标本，增加趣味性" }
-          },
-          { 
-            time: "15:00", 
-            timeEnd: "16:30",
-            type: "attraction",
-            id: "yangyuan",
-            name: "阳元石景区",
-            description: "平缓路线徒步，设置「找化石」小游戏。九九天梯需1.2米以上儿童才能攀登，注意安全",
+            id: "yangyuan-guanjing",
+            name: "阳元石观景台",
+            description: "午餐后前往阳元石景区，先在观景台打卡拍照，欣赏阳元石奇观。然后前往云崖栈道入口准备登山。",
             address: "广东省韶关市仁化县丹霞山阳元石景区",
             ticket: "包含在丹霞山门票内（成人100元，儿童半价）",
             booking: "可在「丹霞山景区」公众号或美团预订",
-            tips: ["选择平缓路线，适合亲子", "带好饮用水和防晒用品", "注意护拦间隙，牵好孩子"],
+            tips: ["观景台拍照打卡", "之后前往云崖栈道入口登山"],
             hours: "06:30-18:00",
             coord: [24.9456, 113.7328],
             parking: {
               name: "阳元石景区停车场",
               type: "own",
-              fee: "包含在景区门票内",
-              distance: "景区入口处",
-              tips: "步行游览，车停在此处即可"
+              fee: "包含在景区门票内"
             },
-            alert: { type: "warning", title: "安全提醒", text: "九九天梯需1.2米以上儿童才能攀登，护栏间隙较大，务必牵好孩子" }
+            alert: { type: "info", title: "游览提示", text: "观景台打卡后，前往云崖栈道入口开始登山" }
           },
           { 
-            time: "18:00", 
-            timeEnd: "19:30",
+            time: "14:30", 
+            timeEnd: "15:30",
+            type: "attraction",
+            id: "yunya-zhandao",
+            name: "云崖栈道登山",
+            description: "从云崖栈道入口开始登山，栈道蜿蜒而上，沿途欣赏丹霞地貌。爬云崖栈道约30分钟，登顶后在嘉遁亭短暂逗留赏景，俯瞰锦江和群山美景。",
+            address: "广东省韶关市仁化县丹霞山阳元石景区云崖栈道",
+            ticket: "包含在丹霞山门票内",
+            tips: ["云崖栈道约30分钟登顶", "嘉遁亭赏景休息", "带好饮用水，注意防晒"],
+            hours: "06:30-18:00",
+            coord: [24.9445, 113.7318],
+            parking: {
+              name: "景区内部",
+              type: "own",
+              fee: "已含"
+            },
+            alert: { type: "warning", title: "登山提醒", text: "栈道较陡，注意牵好孩子；登顶后在嘉遁亭休息赏景" }
+          },
+          { 
+            time: "16:00", 
+            timeEnd: "17:00",
+            type: "attraction",
+            id: "ximeizhai",
+            name: "细美斋+九九天梯",
+            description: "前往细美斋和九九天梯区域游览，逗留约1小时。九九天梯是丹霞山著名险峻景点，需1.2米以上儿童才能攀登，护栏间隙较大注意安全。",
+            address: "广东省韶关市仁化县丹霞山阳元石景区",
+            ticket: "包含在丹霞山门票内",
+            tips: ["细美斋是观赏晚霞的好地方", "九九天梯较陡需量力而行", "儿童需1.2米以上才能登天梯"],
+            hours: "06:30-18:00",
+            coord: [24.9438, 113.7305],
+            parking: {
+              name: "景区内部",
+              type: "own",
+              fee: "已含"
+            },
+            alert: { type: "warning", title: "安全提醒", text: "九九天梯较陡，儿童需1.2米以上才能攀登，护栏间隙大务必牵好孩子" }
+          },
+          { 
+            time: "17:00", 
+            timeEnd: "17:30",
+            type: "activity", 
+            name: "九九天梯下山",
+            content: "从九九天梯下山，约30分钟抵达山脚",
+            alert: { type: "info", title: "下山提示", text: "下山注意安全，约17:30抵达山脚，之后前往水上丹霞码头" }
+          },
+          { 
+            time: "17:30", 
+            timeEnd: "18:30",
+            type: "attraction",
+            id: "shuishang-danxia",
+            name: "水上丹霞（晚霞游船）",
+            description: "傍晚时分乘船游览锦江，观赏水上丹霞地貌，欣赏绝美晚霞。沿途欣赏群象过江、赤壁红岩等20多处景点，船程约50分钟。",
+            address: "广东省韶关市仁化县丹霞山水上丹霞码头",
+            ticket: "成人票90元，儿童票45元",
+            booking: "现场购票或美团预订",
+            tips: ["傍晚游船可观赏晚霞", "船程约50分钟", "拍照超出片"],
+            hours: "08:30-18:00",
+            coord: [24.9489, 113.7365],
+            parking: {
+              name: "水上丹霞码头停车场",
+              type: "nearby",
+              fee: "免费"
+            },
+            alert: { type: "tip", title: "晚霞推荐", text: "傍晚时分游船，可观赏丹霞晚霞美景，拍照超出片" }
+          },
+          { 
+            time: "18:30", 
+            timeEnd: "20:00",
             type: "restaurant",
             id: "xiangmeizi",
-            name: "湘妹子菜馆",
+            name: "餐霞楼平价饭店",
             meal: "晚餐",
-            rating: 4.8,
+            rating: 4.5,
             price: 48,
             address: "丹霞山景区商业街",
-            dishes: ["免辣剁椒鱼头", "腊肉炒笋", "清炒时蔬"],
+            dishes: ["免辣剁椒鱼头", "腊肉炒笋", "清炒时蔬", "土鸡汤"],
+            recommendDishes: ["免辣剁椒鱼头", "腊肉炒笋"],
             hours: "11:00-21:00",
             coord: [24.9489, 113.7402],
             parking: {
               name: "商业街停车场",
               type: "nearby",
-              fee: "免费",
-              distance: "餐厅门口路边停车位",
-              tips: "傍晚用餐高峰期可能需要等位"
-            }
+              fee: "免费"
+            },
+            alert: { type: "tip", title: "晚餐安排", text: "游船后前往晚餐，游览一天后享用美食" }
           },
           { 
-            time: "20:00", 
+            time: "20:30", 
             timeEnd: "",
             type: "hotel",
-            name: "丹霞山景区内民宿",
-            features: "推窗见山景，有儿童游乐区",
+            name: "丹霞山雅舍兰香客栈",
+            phone: "13826358070",
+            address: "韶关市仁化县丹霞山瑶塘村13号",
+            features: "近丹霞山博物馆(320米)，推窗见山景，有儿童游乐区",
+            coord: [24.9485, 113.7398],
             parking: {
-              name: "民宿专属停车场",
+              name: "客栈专属停车场",
               type: "own",
-              fee: "免费",
-              tips: "入住客人免费停车，向店家索取停车证"
-            }
+              fee: "免费"
+            },
+            alert: { type: "tip", title: "早睡提示", text: "明天5:20起床看日出，今晚早点休息！客栈位于瑶塘村，步行约5分钟" }
           }
-        ]
+        ],
+        freeTimeRecommendations: {
+          attractions: [
+            { name: "丹霞山地质科普馆", desc: "免费参观，儿童互动区学习丹霞地貌形成过程，可领取科普手册", tag: "推荐" },
+            { name: "南华禅寺", desc: "距离约50公里，六祖慧能弘法地，适合对佛教文化感兴趣的游客" },
+            { name: "珠玑古巷", desc: "广府人发祥地，可品尝饺俚糍等传统小吃，体验包饺子糍DIY" }
+          ],
+          snacks: [
+            { name: "饺俚糍", shop: "珠玑古巷小吃店", desc: "韶关传统小吃，酸菜/辣椒酸笋馅", address: "南雄市珠玑古巷内" },
+            { name: "冷水猪肚", shop: "龙归镇农家乐", desc: "武江区龙归镇特色，猪肚冰水浸透制成凉菜，口感爽脆", address: "韶关市武江区龙归镇" },
+            { name: "丹霞山小笋", shop: "丹霞印象农家菜", desc: "当地山珍，清炒爽嫩可口", address: "丹霞山景区内" },
+            { name: "仁化三宝", shop: "仁化特产店", desc: "铁皮石斛、巴寨灵芝、丹霞豆腐，可作伴手礼", address: "仁化县丹霞山景区商业街" }
+          ]
+        }
       },
       {
         day: 2,
         date: "2.19 周三",
-        title: "丹霞山→莽山",
-        subtitle: "云海温泉",
+        title: "丹霞山日出→莽山",
+        subtitle: "观日祈福·云海温泉",
         route: { from: "丹霞山", to: "莽山", duration: "2.5小时", distance: "180km" },
         weather: "晴天 6-16℃",
         startCoord: [24.9486, 113.7394],
         endCoord: [24.9932, 112.8672],
         schedule: [
           { 
-            time: "08:00", 
-            timeEnd: "10:30",
-            type: "departure", 
-            name: "民宿早餐后出发",
-            content: "早餐后退房，驾车前往莽山",
-            alert: null
+            time: "05:20", 
+            timeEnd: "05:40",
+            type: "activity", 
+            name: "起床准备出发",
+            content: "早起，准备登山装备",
+            alert: { type: "warning", title: "早起看日出", text: "今天看日出需早起！穿保暖衣物，带手电筒/头灯" }
           },
           { 
-            time: "10:30", 
-            timeEnd: "11:00",
+            time: "05:40", 
+            timeEnd: "05:50",
+            type: "departure", 
+            name: "出发前往长老峰景区",
+            content: "步行前往长老峰景区门口",
+            alert: { type: "info", title: "早餐安排", text: "在景区门口买豆浆、包子当早餐" }
+          },
+          { 
+            time: "05:55", 
+            timeEnd: "06:00",
+            type: "arrival", 
+            name: "刷脸入园，乘接驳车",
+            content: "刷脸入园，坐接驳车到最后一站（别在索道站下）",
+            parking: {
+              name: "长老峰景区入口",
+              type: "none",
+              fee: "步行前往"
+            },
+            alert: { type: "tip", title: "接驳车提示", text: "接驳车坐到最后一站，不要在索道站下车" }
+          },
+          { 
+            time: "06:00", 
+            timeEnd: "06:36",
+            type: "attraction",
+            id: "zhanglaofeng-dengshan",
+            name: "长老峰登山",
+            description: "往前100米往左边阶梯上山，途经半山亭→别传禅寺→丹梯铁索（比较陡），全程约36分钟直达观日亭。丹梯铁索较陡，注意牵好孩子。",
+            address: "广东省韶关市仁化县丹霞山长老峰景区",
+            ticket: "包含在丹霞山门票内",
+            tips: ["左边阶梯上山，约36分钟到观日亭", "丹梯铁索较陡注意安全", "带手电筒/头灯"],
+            hours: "全天开放",
+            coord: [24.9512, 113.7456],
+            parking: {
+              name: "无",
+              type: "none",
+              fee: "-"
+            },
+            alert: { type: "warning", title: "登山提醒", text: "丹梯铁索较陡，注意牵好孩子；天还未亮，带手电筒" }
+          },
+          { 
+            time: "06:36", 
+            timeEnd: "07:00",
+            type: "attraction",
+            id: "guanri-ting",
+            name: "观日亭看日出",
+            description: "抵达观日亭，提前占好机位，等待6:57的日出。俯瞰群山视野很好，光线渐亮超出片。丹霞日出是丹霞山最著名的景观之一。",
+            address: "广东省韶关市仁化县丹霞山长老峰观日亭",
+            ticket: "包含在丹霞山门票内",
+            tips: ["提前占好机位", "日出约6:57", "俯瞰群山视野很好，拍照超出片"],
+            hours: "全天开放",
+            coord: [24.9534, 113.7478],
+            parking: {
+              name: "无",
+              type: "none",
+              fee: "-"
+            },
+            alert: { type: "tip", title: "日出时刻", text: "日出约6:57，提前占好机位；俯瞰群山视野极佳，拍照超出片" }
+          },
+          { 
+            time: "07:00", 
+            timeEnd: "09:00",
+            type: "attraction",
+            id: "yinyuanshi-huanxian",
+            name: "阴元石环线下山",
+            description: "日出观赏结束后下山，走阴元石环线。途经双喜台、福音峡（风景清幽人少好拍照）→阴元石景点（打卡即可无需久留）→仙居岩道观→翔龙湖入口。全程约2小时。",
+            address: "广东省韶关市仁化县丹霞山长老峰景区",
+            ticket: "包含在丹霞山门票内",
+            tips: ["途经双喜台、福音峡，风景清幽", "阴元石打卡即可", "最终到翔龙湖入口坐接驳车"],
+            hours: "全天开放",
+            coord: [24.9478, 113.7423],
+            parking: {
+              name: "无",
+              type: "none",
+              fee: "-"
+            },
+            alert: { type: "info", title: "下山路线", text: "走阴元石环线下山，途经双喜台、福音峡，约9:00到翔龙湖入口坐接驳车" }
+          },
+          { 
+            time: "09:00", 
+            timeEnd: "09:30",
+            type: "arrival", 
+            name: "翔龙湖接驳车返回",
+            content: "到翔龙湖入口坐接驳车返回酒店",
+            alert: { type: "info", title: "返程提醒", text: "接驳车返回酒店，收拾行李驾车前往莽山" }
+          },
+          { 
+            time: "09:30", 
+            timeEnd: "12:00",
+            type: "departure", 
+            name: "驾车前往莽山",
+            content: "退房后驾车前往莽山，全程约180公里",
+            alert: { type: "info", title: "行程提醒", text: "全程约180公里，预计2.5小时，中途可在服务区休息" }
+          },
+          { 
+            time: "12:00", 
+            timeEnd: "12:30",
             type: "arrival", 
             name: "抵达莽山国家森林公园",
             content: "抵达莽山，准备游览",
@@ -1358,90 +1682,102 @@
               name: "莽山景区游客中心停车场",
               type: "own",
               fee: "10元/次",
-              capacity: "大型停车场，约300个车位",
-              tips: "建议停在游客中心附近，方便乘坐景区接驳车"
+              capacity: "大型停车场，约300个车位"
             }
           },
           { 
-            time: "12:00", 
-            timeEnd: "13:00",
+            time: "12:30", 
+            timeEnd: "13:30",
             type: "restaurant",
             id: "mangshan-food",
-            name: "莽山特色餐厅",
+            name: "莽山人家餐厅",
             meal: "午餐",
-            rating: 4.7,
+            rating: 4.4,
             price: 60,
             address: "莽山景区入口商业街",
-            dishes: ["莽山腊肉", "山野菜", "土鸡汤"],
+            dishes: ["莽山腊肉", "山野菜", "土鸡汤", "手撕包菜"],
+            recommendDishes: ["莽山腊肉", "山野菜", "土鸡汤"],
             hours: "10:00-20:00",
             coord: [24.9901, 112.8620],
+            dianpingUrl: "https://www.dianping.com/shop/G9i9SUDPhjH7Nuj9",
             parking: {
               name: "商业街停车场",
               type: "nearby",
-              fee: "免费",
-              distance: "步行约3分钟",
-              tips: "就在景区入口处，用餐可免费停放"
+              fee: "免费"
             },
             alert: { type: "tip", title: "特色推荐", text: "莽山腊肉是当地特产，土鸡汤滋补暖身适合冬季" }
           },
           { 
-            time: "13:30", 
+            time: "14:00", 
             timeEnd: "16:30",
             type: "attraction",
             id: "mangshan",
             name: "莽山五指峰景区",
-            description: "乘索道上山（约20分钟），漫步海拔1600米的云海栈道。冬季可观赏壮观的云海、雾凇奇观，宛如童话世界。",
+            description: "乘索道上山（约20分钟），漫步海拔1600米的云海栈道。冬季可观赏壮观的云海、雾凇奇观。",
             address: "湖南省郴州市宜章县莽山国家森林公园",
             ticket: "成人门票+索道280元，儿童140元",
             booking: "「莽山五指峰景区」公众号或携程预订",
-            tips: ["山顶比山下低8-10度，务必保暖", "索道运营时间9:00-16:00", "预留3-4小时游览"],
+            tips: ["山顶比山下低8-10度，务必保暖", "索道运营时间9:00-16:00", "预留2.5小时游览"],
             hours: "08:00-17:00",
             coord: [24.9932, 112.8672],
             parking: {
               name: "五指峰索道站停车场",
               type: "own",
-              fee: "10元/次",
-              distance: "索道站入口处",
-              tips: "建议早到，下午索道排队人多"
+              fee: "10元/次"
             },
-            alert: { type: "warning", title: "保暖提醒", text: "山顶气温比山下低8-10度，务必给孩子穿厚外套！索道16:00停运，注意时间" }
+            alert: { type: "warning", title: "保暖提醒", text: "山顶气温比山下低8-10度，务必给孩子穿厚外套！索道16:00停运，请提前下山" }
           },
           { 
             time: "17:00", 
             timeEnd: "18:30",
-            type: "attraction",
-            id: "mangshan-spa",
-            name: "莽山森林温泉",
-            description: "树上汤泉独特体验，儿童专属温水池，水温30-35℃。泡温泉可缓解旅途疲劳。",
-            address: "莽山森林温泉酒店内",
-            ticket: "成人168元，儿童88元",
-            booking: "入住酒店客人可享优惠价",
-            tips: ["准备泳衣泳帽", "儿童需成人陪同", "建议傍晚时段人少"],
-            hours: "14:00-22:00",
-            coord: [24.9856, 112.8589],
+            type: "restaurant",
+            id: "mangshan-dinner",
+            name: "莽山人家餐厅",
+            meal: "晚餐",
+            rating: 4.4,
+            price: 60,
+            address: "莽山景区入口商业街",
+            dishes: ["莽山腊肉", "瑶族油茶", "山野菜", "土鸡汤"],
+            recommendDishes: ["莽山腊肉", "瑶族油茶"],
+            hours: "10:00-20:00",
+            coord: [24.9901, 112.8620],
             parking: {
-              name: "温泉酒店停车场",
-              type: "own",
-              fee: "入住客人免费",
-              tips: "酒店住客凭房卡免费停车"
+              name: "商业街停车场",
+              type: "nearby",
+              fee: "免费"
             },
-            alert: { type: "info", title: "温泉提示", text: "儿童专属温水池水温30-35℃，傍晚时段人少更舒适，记得带泳衣泳帽" }
+            alert: { type: "tip", title: "晚餐安排", text: "游览后享用晚餐，瑶族油茶是当地特色" }
           },
           { 
-            time: "19:30", 
+            time: "19:00", 
             timeEnd: "",
             type: "hotel",
-            name: "莽山森林温泉酒店",
-            features: "带儿童游乐设施，含温泉门票",
+            name: "莽山大酒店",
+            phone: "0735-3999998",
+            address: "湖南省郴州市宜章县莽山国家森林公园内",
+            features: "三星级酒店，由五层主楼和八栋别墅组成，景区内便利",
+            coord: [24.9878, 112.8612],
             parking: {
-              name: "酒店地下停车场",
+              name: "酒店停车场",
               type: "own",
-              fee: "入住客人免费",
-              tips: "有室内停车场，冬季停车不用担心结冰"
+              fee: "入住客人免费"
             },
-            alert: { type: "tip", title: "入住福利", text: "入住客人可享受温泉优惠价，带儿童游乐设施" }
+            alert: { type: "tip", title: "入住提示", text: "酒店位于莽山国家森林公园内，三星级标准，含早餐" }
           }
-        ]
+        ],
+        freeTimeRecommendations: {
+          attractions: [
+            { name: "高椅岭", desc: "丹霞秘境，红色岩壁与碧水相映，被誉为'被上帝遗忘的地方'", tag: "热门" },
+            { name: "马皇丘大峡谷", desc: "免费丹霞秘境，红色岩壁与竹林交错，日落时分光影绝美" },
+            { name: "腊元古村", desc: "客家古村落，体验瑶族文化和传统建筑" }
+          ],
+          snacks: [
+            { name: "莽山烙油饼", shop: "瑶家小吃店", desc: "莽山特色山珍，色泽金黄，外酥内嫩", address: "莽山景区商业街" },
+            { name: "莽山腊肉", shop: "莽山人家餐厅", desc: "当地特产，柴火熏制，香味浓郁", address: "莽山景区入口商业街" },
+            { name: "瑶家油茶", shop: "莽山瑶族小镇", desc: "莽山瑶族特色饮品，暖胃驱寒", address: "莽山景区内" },
+            { name: "宜章鱼粉", shop: "裕后街鱼粉店", desc: "郴州非遗美食，鲜香爽辣", address: "郴州市裕后街" }
+          ]
+        }
       },
       {
         day: 3,
@@ -1458,8 +1794,7 @@
             timeEnd: "10:00",
             type: "departure", 
             name: "酒店早餐后退房",
-            content: "早餐后退房，驾车前往永州",
-            alert: null
+            content: "早餐后退房，驾车前往永州"
           },
           { 
             time: "10:00", 
@@ -1470,111 +1805,142 @@
             parking: {
               name: "酒店停车场",
               type: "own",
-              fee: "入住客人免费",
-              tips: "市区酒店一般都有停车场"
+              fee: "入住客人免费"
             }
           },
           { 
-            time: "12:00", 
-            timeEnd: "13:00",
+            time: "11:00", 
+            timeEnd: "12:00",
             type: "restaurant",
             id: "yongzhou-duck",
-            name: "永州血鸭馆（零陵店）",
+            name: "醉永州",
             meal: "午餐",
-            rating: 4.9,
+            rating: 4.7,
             price: 50,
             address: "永州市零陵区潇水中路",
-            dishes: ["永州血鸭", "东安鸡", "蒸蛋"],
+            dishes: ["永州血鸭", "东安鸡", "永州喝螺", "蒸蛋"],
+            recommendDishes: ["永州血鸭", "东安鸡", "永州喝螺"],
             hours: "10:00-21:00",
             coord: [26.2201, 111.6256],
             parking: {
               name: "潇水中路路边停车位",
               type: "nearby",
-              fee: "前2小时免费",
-              distance: "餐厅门口",
-              tips: "路边划线车位，中午时段容易找到位置"
+              fee: "前2小时免费"
             },
-            alert: { type: "tip", title: "招牌必点", text: "永州血鸭是当地名菜，东安鸡酸甜开胃，蒸蛋适合小朋友" }
+            alert: { type: "tip", title: "招牌必点", text: "永州血鸭是当地名菜，东安鸡酸甜开胃，喝螺是零陵特色" }
           },
           { 
-            time: "13:30", 
-            timeEnd: "15:30",
+            time: "12:30", 
+            timeEnd: "13:00",
+            type: "arrival", 
+            name: "前往零陵古城码头",
+            content: "前往零陵古城码头，准备乘船前往萍洲书院",
+            parking: {
+              name: "零陵古城码头停车场",
+              type: "own",
+              fee: "免费"
+            },
+            alert: { type: "info", title: "乘船提示", text: "从零陵古城码头乘船前往萍洲书院，船程约20分钟" }
+          },
+          { 
+            time: "13:00", 
+            timeEnd: "16:00",
+            type: "attraction",
+            id: "pingzhou-shuyuan",
+            name: "萍洲书院",
+            description: "乘船前往萍洲书院（船程约20分钟），萍洲书院位于潇水与湘江汇合处的萍洲岛上，是永州最古老的书院之一。岛上古木参天，环境清幽，可感受千年书院文化。游览约3小时后乘船返回。",
+            address: "湖南省永州市零陵区萍洲岛",
+            ticket: "含船票约80元/人",
+            booking: "现场购票",
+            tips: ["船程约20分钟", "书院历史悠久，适合文化体验", "岛上环境清幽，拍照出片"],
+            hours: "08:30-17:30",
+            coord: [26.2345, 111.6156],
+            parking: {
+              name: "无（乘船前往）",
+              type: "none",
+              fee: "-"
+            },
+            alert: { type: "tip", title: "游览提示", text: "萍洲书院位于潇水与湘江汇合处，千年书院文化，环境清幽" }
+          },
+          { 
+            time: "16:00", 
+            timeEnd: "16:30",
+            type: "arrival", 
+            name: "乘船返回零陵古城",
+            content: "从萍洲书院乘船返回零陵古城码头",
+            alert: { type: "info", title: "返程提示", text: "乘船返回零陵古城，船程约20分钟" }
+          },
+          { 
+            time: "16:30", 
+            timeEnd: "18:30",
             type: "attraction",
             id: "lingling",
             name: "零陵古城",
-            description: "逛明清古建筑群，石板街、古桥流水，给孩子穿汉服拍照。可购买汉服或租借。",
+            description: "逛明清古建筑群，石板街、古桥流水，给孩子穿汉服拍照。傍晚时分古城灯光初上，更有韵味。",
             address: "湖南省永州市零陵区潇水西路",
             ticket: "免费开放",
             booking: "无需预约",
-            tips: ["汉服可在景区内租借", "下午光线好适合拍照", "石板路建议穿舒适鞋"],
+            tips: ["汉服可在景区内租借", "傍晚灯光氛围好适合拍照", "石板路建议穿舒适鞋"],
             hours: "全天开放",
             coord: [26.2215, 111.6289],
             parking: {
               name: "零陵古城停车场",
               type: "own",
-              fee: "免费",
-              capacity: "约100个车位",
-              tips: "古城入口处有大型停车场，周末可能较满"
+              fee: "免费"
             },
-            alert: { type: "info", title: "拍照攻略", text: "景区可租借汉服，下午光线柔和适合拍照，石板路建议穿舒适鞋子" }
+            alert: { type: "info", title: "拍照攻略", text: "傍晚时分古城灯光初上，更有韵味，可租借汉服拍照" }
           },
           { 
-            time: "16:00", 
-            timeEnd: "17:00",
-            type: "attraction",
-            id: "yuxi",
-            name: "愚溪",
-            description: "沿溪散步，孩子可在浅水区玩水。愚溪因柳宗元的《愚溪诗序》而闻名。",
-            address: "湖南省永州市零陵区柳子街",
-            ticket: "免费",
-            booking: "无需预约",
-            tips: ["注意水深，看好孩子", "可带小网兜捉小鱼", "傍晚蚊虫多，备驱蚊液"],
-            hours: "全天开放",
-            coord: [26.2189, 111.6234],
-            parking: {
-              name: "柳子街路边停车位",
-              type: "nearby",
-              fee: "免费",
-              distance: "步行约5分钟",
-              tips: "柳子街是老街，建议停在附近再步行前往"
-            },
-            alert: { type: "warning", title: "安全提醒", text: "注意水深，时刻看护好孩子；傍晚蚊虫多，记得带驱蚊液" }
-          },
-          { 
-            time: "18:00", 
-            timeEnd: "19:30",
+            time: "18:30", 
+            timeEnd: "20:00",
             type: "restaurant",
             id: "gucheng-food",
-            name: "古城农家菜",
+            name: "零陵古城农家菜",
             meal: "晚餐",
-            rating: 4.8,
+            rating: 4.5,
             price: 45,
             address: "零陵古城内",
-            dishes: ["酿豆腐", "清炒时蔬", "蒸蛋羹"],
+            dishes: ["酿豆腐", "清炒时蔬", "蒸蛋羹", "零陵禾花鱼"],
+            recommendDishes: ["酿豆腐", "零陵禾花鱼"],
             hours: "11:00-21:00",
             coord: [26.2212, 111.6291],
             parking: {
               name: "古城停车场",
               type: "own",
-              fee: "免费",
-              distance: "步行约3分钟",
-              tips: "与古城共用停车场"
-            }
+              fee: "免费"
+            },
+            alert: { type: "tip", title: "晚餐安排", text: "古城游玩后享用晚餐，零陵禾花鱼是当地特色" }
           },
           { 
-            time: "20:00", 
+            time: "20:30", 
             timeEnd: "",
             type: "hotel",
-            name: "永州零陵区亲子酒店",
-            features: "地理位置优越，设施齐全",
+            name: "美宿欢漫酒店(永州零陵古城湖南科技学院店)",
+            phone: "0746-6369888",
+            address: "永州市零陵区徐家井街道芝山路15号(BoBo新天地旁)",
+            features: "2022年开业，全屋智能客控，近零陵古城步行约10分钟",
+            coord: [26.2215, 111.6289],
             parking: {
               name: "酒店停车场",
               type: "own",
-              fee: "入住客人免费",
-              tips: "市区酒店配套停车场"
-            }
+              fee: "入住客人免费"
+            },
+            alert: { type: "tip", title: "入住提示", text: "酒店评分4.8分，近零陵古城步行约10分钟，周边吃喝玩乐便利" }
           }
-        ]
+        ],
+        freeTimeRecommendations: {
+          attractions: [
+            { name: "零陵古城", desc: "夜游古城，品尝当地美食，感受柳宗元笔下'小石潭'意境", tag: "推荐" },
+            { name: "小石潭", desc: "《永州八记》原型地，距零陵古城约170米，清幽宁静" },
+            { name: "回龙塔", desc: "明代古塔，零陵地标建筑" }
+          ],
+          snacks: [
+            { name: "永州血鸭", shop: "醉永州", desc: "永州传统名菜，色泽红润，口感鲜美", address: "永州市零陵区潇水中路" },
+            { name: "东安鸡", shop: "东安鸡馆", desc: "国宴名菜，酸辣鲜香", address: "永州市零陵区" },
+            { name: "永州喝螺", shop: "零陵古城小吃摊", desc: "当地特色小吃，螺肉鲜美", address: "零陵古城内" },
+            { name: "零陵大三鲜", shop: "食膳人家", desc: "本地特色菜，食材新鲜", address: "永州市区" }
+          ]
+        }
       },
       {
         day: 4,
@@ -1602,9 +1968,7 @@
             parking: {
               name: "柳子街停车场",
               type: "nearby",
-              fee: "5元/次",
-              distance: "步行约3分钟",
-              tips: "柳子街入口处有小型停车场"
+              fee: "5元/次"
             },
             alert: { type: "info", title: "亲子建议", text: "提前准备柳宗元的儿童故事，让参观更有趣味性" }
           },
@@ -1613,19 +1977,19 @@
             timeEnd: "12:00",
             type: "restaurant",
             id: "yongzhou-special",
-            name: "永州特色餐厅",
+            name: "食膳人家",
             meal: "午餐",
-            rating: 4.9,
+            rating: 4.6,
             price: 55,
             address: "永州市区",
-            dishes: ["永州喝螺", "腊肉炒笋", "青菜"],
+            dishes: ["永州喝螺", "腊肉炒笋", "青菜", "祁阳曲米鱼"],
+            recommendDishes: ["永州喝螺", "祁阳曲米鱼"],
             hours: "10:00-21:00",
             coord: [26.2189, 111.6267],
             parking: {
               name: "餐厅门口停车位",
               type: "own",
-              fee: "用餐免费",
-              tips: "市区餐厅一般有门前车位"
+              fee: "用餐免费"
             }
           },
           { 
@@ -1645,8 +2009,7 @@
             parking: {
               name: "酒店停车场",
               type: "own",
-              fee: "入住客人免费",
-              tips: "南岳区酒店大多有配套停车场"
+              fee: "入住客人免费"
             }
           },
           { 
@@ -1665,9 +2028,7 @@
             parking: {
               name: "古镇停车场",
               type: "own",
-              fee: "10元/次",
-              distance: "古镇入口处",
-              tips: "步行游览古镇，车停在入口停车场"
+              fee: "10元/次"
             },
             alert: { type: "tip", title: "特产推荐", text: "南岳素饼是当地特产，适合作为伴手礼" }
           },
@@ -1676,36 +2037,73 @@
             timeEnd: "19:30",
             type: "restaurant",
             id: "lijun",
-            name: "丽君饭店（庙西店）",
+            name: "丽君饭店(游客服务中心店)",
             meal: "晚餐",
-            rating: 4.8,
+            rating: 4.7,
             price: 50,
-            address: "南岳区庙西街",
-            dishes: ["衡山腊肉火锅", "豆腐圆子", "青菜"],
+            address: "衡阳市南岳区南岳大庙旁",
+            dishes: ["南岳豆腐煲", "酱辣椒炒土鸡", "南岳腐乳", "衡东脆肚", "柴火腊肉"],
+            recommendDishes: ["南岳豆腐煲", "酱辣椒炒土鸡", "南岳腐乳", "衡东脆肚"],
             hours: "10:00-21:00",
             coord: [27.2321, 112.7356],
+            dianpingUrl: "https://m.dianping.com/shop/k5uVgKk911JQm8IL",
             parking: {
               name: "庙西街路边停车位",
               type: "nearby",
-              fee: "免费",
-              distance: "餐厅门口",
-              tips: "街道两侧有划线车位"
-            }
+              fee: "免费"
+            },
+            alert: { type: "tip", title: "大众点评热门", text: "南岳腐乳是一绝，南岳豆腐煲点击率最高" }
           },
           { 
-            time: "20:00", 
+            time: "19:30", 
+            timeEnd: "21:00",
+            type: "attraction",
+            id: "nanyueli",
+            name: "南岳里·庙会文化美食街区",
+            description: "夜晚游览南岳里美食街区，感受庙会文化和民俗风情。街区汇集湖南各地特色小吃，灯光璀璨，夜景优美。可品尝南岳素饼、衡山米粉、糖油粑粑等特色美食。",
+            address: "湖南省衡阳市南岳区南岳里",
+            ticket: "免费开放",
+            booking: "无需预约",
+            tips: ["夜晚灯光璀璨，拍照出片", "汇集湖南各地特色小吃", "可品尝南岳素饼、糖油粑粑"],
+            hours: "全天开放（夜间更热闹）",
+            coord: [27.2335, 112.7372],
+            parking: {
+              name: "街区停车场",
+              type: "nearby",
+              fee: "免费"
+            },
+            alert: { type: "tip", title: "夜景推荐", text: "夜晚灯光璀璨，是南岳夜游的好去处，可品尝各种特色小吃" }
+          },
+          { 
+            time: "21:30", 
             timeEnd: "",
             type: "hotel",
-            name: "南岳区亲子酒店",
-            features: "有儿童温泉和游乐设施",
+            name: "衡阳卿云筑观景酒店(南岳衡山风景区南岳大庙景区店)",
+            phone: "0734-5666888",
+            address: "衡阳市南岳区吉利街86号",
+            features: "评分4.8分，毗邻南岳大庙，步行可达景区入口，高铁接送服务",
+            coord: [27.2318, 112.7342],
             parking: {
               name: "酒店停车场",
               type: "own",
-              fee: "入住客人免费",
-              tips: "南岳区酒店配套停车场"
-            }
+              fee: "入住客人免费"
+            },
+            alert: { type: "tip", title: "入住提示", text: "酒店毗邻南岳大庙步行约5分钟，提供高铁接送服务，天台可观日落山景" }
           }
-        ]
+        ],
+        freeTimeRecommendations: {
+          attractions: [
+            { name: "南岳里美食文化街区", desc: "聚焦南岳特色庙会、民俗主题的美食街区，各种湖南特色小吃", tag: "推荐" },
+            { name: "祝圣寺", desc: "南岳佛教圣地，感受佛教文化" },
+            { name: "华严湖", desc: "湖水清澈碧绿，环境清幽" }
+          ],
+          snacks: [
+            { name: "衡山米粉", shop: "南岳米粉老店", desc: "特色三鲜粉、鲜筒子骨粉，当地早餐首选", address: "南岳区古镇街" },
+            { name: "南岳豆腐", shop: "丽君饭店", desc: "当地特产豆腐，口感嫩滑", address: "衡阳市南岳区南岳大庙旁" },
+            { name: "衡山油酥饼", shop: "古镇糕点铺", desc: "传统小吃，香酥可口", address: "南岳古镇内" },
+            { name: "观音笋", shop: "南岳特产店", desc: "农历二月出土的细嫩小笋，南岳特产", address: "南岳大庙周边" }
+          ]
+        }
       },
       {
         day: 5,
@@ -1722,8 +2120,7 @@
             timeEnd: "08:30",
             type: "activity", 
             name: "酒店早餐",
-            content: "享用酒店早餐",
-            alert: null
+            content: "享用酒店早餐"
           },
           { 
             time: "08:30", 
@@ -1741,9 +2138,7 @@
             parking: {
               name: "南岳大庙停车场",
               type: "own",
-              fee: "10元/次",
-              capacity: "大型停车场，约400个车位",
-              tips: "大庙正门左侧，节假日可能较拥挤，建议早到"
+              fee: "10元/次"
             },
             alert: { type: "warning", title: "注意事项", text: "穿着得体不宜暴露，建议请导游讲解；可给孩子准备祈福带写心愿" }
           },
@@ -1752,30 +2147,28 @@
             timeEnd: "13:00",
             type: "restaurant",
             id: "shanyuan",
-            name: "善缘素食（大庙旁）",
+            name: "南岳大庙素斋馆",
             meal: "午餐",
-            rating: 4.9,
+            rating: 4.5,
             price: 35,
-            address: "南岳大庙旁",
-            dishes: ["素火腿", "罗汉斋", "素蒸蛋"],
+            address: "南岳大庙内",
+            dishes: ["素火腿", "罗汉斋", "素蒸蛋", "南岳素面"],
+            recommendDishes: ["罗汉斋", "南岳素面", "素火腿"],
             hours: "07:00-19:00",
             coord: [27.2318, 112.7352],
             parking: {
               name: "大庙停车场",
               type: "nearby",
-              fee: "10元/次",
-              distance: "步行约2分钟",
-              tips: "与大庙共用停车场，用餐时间可免费"
+              fee: "10元/次"
             },
-            alert: { type: "tip", title: "素斋特色", text: "参拜后品尝素斋，素火腿和罗汉斋是招牌菜" }
+            alert: { type: "tip", title: "素斋特色", text: "参拜后品尝素斋，罗汉斋和南岳素面是招牌" }
           },
           { 
             time: "14:00", 
             timeEnd: "15:00",
             type: "activity", 
             name: "酒店休息",
-            content: "回酒店午休，养精蓄锐",
-            alert: null
+            content: "回酒店午休，养精蓄锐"
           },
           { 
             time: "15:00", 
@@ -1793,9 +2186,7 @@
             parking: {
               name: "水帘洞景区停车场",
               type: "own",
-              fee: "5元/次",
-              distance: "景区入口处",
-              tips: "小型停车场，车位有限"
+              fee: "5元/次"
             },
             alert: { type: "info", title: "亲子提示", text: "穿防滑鞋，可带玩水工具，孩子可在浅水区玩水" }
           },
@@ -1804,36 +2195,53 @@
             timeEnd: "19:00",
             type: "restaurant",
             id: "kaoshan",
-            name: "靠山王土菜馆",
+            name: "靠山王(南岳店)",
             meal: "晚餐",
-            rating: 4.9,
+            rating: 4.8,
             price: 45,
             address: "南岳区古镇街",
-            dishes: ["衡山雪鸭", "拆骨肉荷包蛋", "蒸蛋"],
+            dishes: ["血鸭", "柴火腊肉", "青椒土猪肉", "擂辣椒皮蛋"],
+            recommendDishes: ["血鸭", "柴火腊肉", "青椒土猪肉"],
             hours: "10:00-21:00",
             coord: [27.2332, 112.7367],
+            dianpingUrl: "https://www.dianping.com/discovery/2396695578",
             parking: {
               name: "古镇街停车场",
               type: "nearby",
-              fee: "免费",
-              distance: "步行约3分钟",
-              tips: "古镇街边有划线车位"
-            }
+              fee: "免费"
+            },
+            alert: { type: "tip", title: "大众点评推荐", text: "血鸭是招牌，环境是园林式装修，适合家庭聚餐" }
           },
           { 
             time: "19:30", 
             timeEnd: "",
             type: "hotel",
-            name: "南岳区亲子酒店（续住）",
-            features: "有儿童温泉和游乐设施",
+            name: "衡阳卿云筑观景酒店(南岳衡山风景区南岳大庙景区店)",
+            phone: "0734-5666888",
+            address: "衡阳市南岳区吉利街86号",
+            features: "续住，毗邻南岳大庙，步行可达景区入口，高铁接送服务",
+            coord: [27.2318, 112.7342],
             parking: {
               name: "酒店停车场",
               type: "own",
-              fee: "入住客人免费",
-              tips: "续住客人继续免费停车"
-            }
+              fee: "入住客人免费"
+            },
+            alert: { type: "tip", title: "续住提示", text: "续住酒店，毗邻南岳大庙步行约5分钟，明天登山方便" }
           }
-        ]
+        ],
+        freeTimeRecommendations: {
+          attractions: [
+            { name: "石鼓书院", desc: "宋代四大书院之一，衡阳文化地标", tag: "推荐" },
+            { name: "水帘洞景区", desc: "衡山著名景点，瀑布景观" },
+            { name: "南岳古镇", desc: "古色古香的街道，可购买当地特产" }
+          ],
+          snacks: [
+            { name: "南岳腐乳", shop: "南岳特产店", desc: "当地特产，口感醇香，可作伴手礼", address: "南岳大庙周边" },
+            { name: "衡东脆肚", shop: "小凤庄衡东土菜", desc: "衡阳特色菜，爽脆可口", address: "南岳区古镇" },
+            { name: "柴火腊肉", shop: "靠山王土菜馆", desc: "衡山农家特色，烟熏风味", address: "南岳区古镇街" },
+            { name: "酱辣椒炒土鸡", shop: "云湖楼饭店", desc: "当地农家菜，香辣下饭", address: "南岳区古镇" }
+          ]
+        }
       },
       {
         day: 6,
@@ -1867,10 +2275,8 @@
               name: "衡山游客中心停车场",
               type: "own",
               fee: "20元/天",
-              capacity: "大型停车场，约800个车位",
-              tips: "建议停在靠近入口处，方便乘坐环保车"
-            },
-            alert: null
+              capacity: "大型停车场，约800个车位"
+            }
           },
           { 
             time: "08:30", 
@@ -1896,8 +2302,7 @@
             parking: {
               name: "游客中心停车场（山脚）",
               type: "own",
-              fee: "20元/天",
-              tips: "山顶无停车场，车停在游客中心，乘环保车上山"
+              fee: "20元/天"
             },
             alert: { type: "warning", title: "保暖重要", text: "山顶气温低5-8度，务必穿厚外套；停留不超过2小时；带雨具！" }
           },
@@ -1908,17 +2313,17 @@
             id: "banshan",
             name: "半山亭茶馆餐厅",
             meal: "午餐",
-            rating: 4.8,
+            rating: 4.3,
             price: 35,
             address: "衡山半山亭",
-            dishes: ["豆腐汤", "野菜炒饭", "蒸红薯"],
+            dishes: ["豆腐汤", "野菜炒饭", "蒸红薯", "素面"],
+            recommendDishes: ["豆腐汤", "野菜炒饭", "蒸红薯"],
             hours: "08:00-17:00",
             coord: [27.2698, 112.7012],
             parking: {
               name: "无停车场（山上）",
               type: "none",
-              fee: "-",
-              tips: "半山亭在山上，只能乘环保车到达，无需停车"
+              fee: "-"
             },
             alert: { type: "tip", title: "山间美食", text: "山间简餐，豆腐汤暖身，蒸红薯小朋友喜欢" }
           },
@@ -1938,8 +2343,7 @@
             parking: {
               name: "无停车场（山上）",
               type: "none",
-              fee: "-",
-              tips: "忠烈祠在半山，乘环保车到达"
+              fee: "-"
             },
             alert: { type: "info", title: "教育意义", text: "可提前准备抗战历史故事，对孩子进行爱国主义教育" }
           },
@@ -1948,44 +2352,58 @@
             timeEnd: "17:00",
             type: "arrival", 
             name: "返回酒店休息",
-            content: "乘环保车下山，返回酒店",
-            alert: null
+            content: "乘环保车下山，返回酒店"
           },
           { 
             time: "18:00", 
             timeEnd: "19:30",
             type: "restaurant",
             id: "hengyang-food",
-            name: "衡阳土菜馆",
+            name: "云湖楼饭店",
             meal: "晚餐",
-            rating: 4.7,
+            rating: 4.6,
             price: 50,
             address: "南岳区古镇",
-            dishes: ["土鸡火锅", "农家小炒", "时蔬"],
+            dishes: ["招牌酱椒鱼头", "柴火腊肉", "时蔬", "土鸡火锅"],
+            recommendDishes: ["招牌酱椒鱼头", "柴火腊肉", "土鸡火锅"],
             hours: "10:00-21:00",
             coord: [27.2335, 112.7372],
             parking: {
               name: "古镇停车场",
               type: "nearby",
-              fee: "免费",
-              distance: "步行约3分钟",
-              tips: "傍晚车位较充足"
+              fee: "免费"
             }
           },
           { 
             time: "20:00", 
             timeEnd: "",
             type: "hotel",
-            name: "南岳区亲子酒店（续住）",
-            features: "整理行李，为明天出发做准备",
+            name: "远山见民宿(南岳衡山景区店)",
+            phone: "19118779988",
+            address: "衡阳市南岳区延寿村九组十一号",
+            features: "评分4.9分，位于衡山景区内，周边有迎仙宫、梵音古道、华严湖",
+            coord: [27.2689, 112.6956],
             parking: {
-              name: "酒店停车场",
+              name: "民宿停车场",
               type: "own",
-              fee: "入住客人免费",
-              tips: "整理行李准备明天出发"
-            }
+              fee: "免费"
+            },
+            alert: { type: "tip", title: "入住提示", text: "民宿位于衡山景区内，可停车，有电梯，房间宽敞，提供接送服务" }
           }
-        ]
+        ],
+        freeTimeRecommendations: {
+          attractions: [
+            { name: "南岳庙会", desc: "跳蚤市场和街头市集，体验当地民俗文化", tag: "推荐" },
+            { name: "忠烈祠", desc: "抗战纪念地，可进行爱国教育" },
+            { name: "藏经殿", desc: "衡山古建筑，珍藏佛教典籍" }
+          ],
+          snacks: [
+            { name: "素斋", shop: "南岳大庙素斋馆", desc: "南岳特色素食，参拜后必尝", address: "南岳大庙内" },
+            { name: "南岳素火腿", shop: "大庙素斋馆", desc: "素食特色菜，口感独特", address: "南岳大庙内" },
+            { name: "罗汉斋", shop: "善缘素食", desc: "佛家斋菜，清爽健康", address: "南岳大庙旁" },
+            { name: "南岳红薯片", shop: "古镇特产店", desc: "当地特产，香脆可口，可作伴手礼", address: "南岳古镇街" }
+          ]
+        }
       },
       {
         day: 7,
@@ -2015,8 +2433,7 @@
               name: "巧克力王国停车场",
               type: "own",
               fee: "入住客人免费",
-              capacity: "大型停车场，约600个车位",
-              tips: "度假区大型停车场，位置充足"
+              capacity: "大型停车场，约600个车位"
             }
           },
           { 
@@ -2026,20 +2443,19 @@
             id: "chocolate-rest",
             name: "巧克力王国主题餐厅",
             meal: "午餐",
-            rating: 4.8,
+            rating: 4.5,
             price: 60,
             address: "巧克力王国园区内",
-            dishes: ["巧克力主题儿童套餐", "红茶排骨", "蒸蛋"],
+            dishes: ["巧克力DIY套餐", "红茶排骨", "儿童套餐", "英德红茶鸡"],
+            recommendDishes: ["巧克力DIY套餐", "红茶排骨", "英德红茶鸡"],
             hours: "10:00-21:00",
             coord: [24.1845, 113.4515],
             parking: {
               name: "园区停车场",
               type: "own",
-              fee: "免费",
-              distance: "步行约5分钟",
-              tips: "园区停车场，凭门票或酒店房卡免费"
+              fee: "免费"
             },
-            alert: { type: "tip", title: "小朋友最爱", text: "巧克力主题儿童套餐，红茶排骨是特色菜" }
+            alert: { type: "tip", title: "小朋友最爱", text: "巧克力DIY套餐，红茶排骨是特色菜" }
           },
           { 
             time: "14:30", 
@@ -2057,9 +2473,7 @@
             parking: {
               name: "巧克力工厂停车场",
               type: "own",
-              fee: "免费",
-              distance: "工厂门口",
-              tips: "就在DIY区域门口，非常方便"
+              fee: "免费"
             },
             alert: { type: "warning", title: "特别提醒", text: "建议穿深色衣服防止巧克力沾染；记得提前预约时段！" }
           },
@@ -2068,8 +2482,7 @@
             timeEnd: "18:30",
             type: "activity", 
             name: "自由活动",
-            content: "园区自由探索，拍照留念",
-            alert: null
+            content: "园区自由探索，拍照留念"
           },
           { 
             time: "19:00", 
@@ -2077,7 +2490,7 @@
             type: "attraction",
             id: "water-world",
             name: "喀斯特汤泉水世界",
-            description: "儿童专属戏水区，水温30℃适合2月游玩。造浪池整点开放。",
+            description: "儿童专属戏水区，水温30℃适合2月游玩。",
             address: "英德奥园巧克力王国园区内",
             ticket: "成人168元，儿童88元",
             booking: "入住酒店客人优惠价",
@@ -2087,9 +2500,7 @@
             parking: {
               name: "水世界停车场",
               type: "own",
-              fee: "免费",
-              distance: "水世界入口处",
-              tips: "有室内更衣室和储物柜"
+              fee: "免费"
             },
             alert: { type: "info", title: "戏水提示", text: "儿童专属戏水区水温30℃；记得带泳衣泳帽和防水手机袋" }
           },
@@ -2097,17 +2508,32 @@
             time: "21:30", 
             timeEnd: "",
             type: "hotel",
-            name: "英德巧克力王国主题酒店",
-            features: "房间有巧克力装饰，孩子超喜欢",
+            name: "英德奥园泉林酒店(巧克力王国店)",
+            phone: "0763-2666666",
+            address: "英德市奥园文化旅游城一期8号地13栋公寓",
+            features: "位于巧克力王国内，近巧克力工厂DIY，温泉水世界",
+            coord: [24.1856, 113.4521],
             parking: {
-              name: "酒店地下停车场",
+              name: "酒店停车场",
               type: "own",
-              fee: "入住客人免费",
-              tips: "地下停车场，安全方便"
+              fee: "入住客人免费"
             },
-            alert: { type: "tip", title: "亲子特色", text: "房间有巧克力装饰，小朋友会超喜欢！" }
+            alert: { type: "tip", title: "入住提示", text: "酒店位于巧克力王国度假区内，步行可达巧克力工厂、温泉水世界" }
           }
-        ]
+        ],
+        freeTimeRecommendations: {
+          attractions: [
+            { name: "洞天仙境", desc: "英西峰林核心景点，溶洞+瀑布+天坑奇观", tag: "推荐" },
+            { name: "英西峰林走廊", desc: "被称为'小桂林'，喀斯特地貌风光绝美" },
+            { name: "T三有机茶园", desc: "茶旅体验，品尝全茶午宴，每一道菜都加入茶元素" }
+          ],
+          snacks: [
+            { name: "英德红茶", shop: "T三有机茶园", desc: "中国红茶之乡特产，香气浓郁", address: "英德英西峰林走廊" },
+            { name: "九龙豆腐", shop: "九龙豆腐坊", desc: "英德农特产品，豆香浓郁", address: "英德九龙镇" },
+            { name: "北江河鲜", shop: "英德河鲜酒楼", desc: "清蒸鱼鲜掉眉毛，肉质鲜嫩", address: "英德市区北江边" },
+            { name: "山水豆腐花", shop: "英德特产店", desc: "英德特色甜品，入口即化", address: "英德奥园巧克力王国" }
+          ]
+        }
       },
       {
         day: 8,
@@ -2124,8 +2550,7 @@
             timeEnd: "09:30",
             type: "activity", 
             name: "酒店早餐，睡到自然醒",
-            content: "享受悠闲的早晨",
-            alert: null
+            content: "享受悠闲的早晨"
           },
           { 
             time: "09:30", 
@@ -2143,9 +2568,7 @@
             parking: {
               name: "茶园停车场",
               type: "own",
-              fee: "免费",
-              distance: "茶园入口处",
-              tips: "免费参观，停车也免费"
+              fee: "免费"
             },
             alert: { type: "tip", title: "伴手礼", text: "可购买英德红茶作为伴手礼，茶园空气清新适合散步" }
           },
@@ -2156,17 +2579,17 @@
             id: "qingyuan-chicken",
             name: "清远鸡煲王",
             meal: "午餐",
-            rating: 4.9,
+            rating: 4.7,
             price: 60,
             address: "英德市区",
-            dishes: ["清远鸡煲", "腐竹", "青菜"],
+            dishes: ["清远鸡煲", "腐竹", "青菜", "英德红茶"],
+            recommendDishes: ["清远鸡煲", "英德红茶"],
             hours: "10:00-21:00",
             coord: [24.1756, 113.4123],
             parking: {
               name: "餐厅门口停车位",
               type: "own",
-              fee: "用餐免费",
-              tips: "市区餐厅门前车位"
+              fee: "用餐免费"
             },
             alert: { type: "tip", title: "当地名菜", text: "清远鸡是广东名菜，返程前品尝一顿美味的鸡煲" }
           },
@@ -2183,24 +2606,32 @@
             timeEnd: "",
             type: "arrival", 
             name: "抵达深圳，旅程结束",
-            content: "平安到家，整理旅行照片，与孩子一起回顾美好时光",
-            alert: null
+            content: "平安到家，整理旅行照片，与孩子一起回顾美好时光"
           },
           { 
             time: "", 
             timeEnd: "",
             type: "hotel",
             name: "温馨的家",
-            features: "整理旅行照片，与孩子一起回顾美好时光",
-            parking: null
+            features: "整理旅行照片，与孩子一起回顾美好时光"
           }
-        ]
+        ],
+        freeTimeRecommendations: {
+          attractions: [
+            { name: "红茶排骨品尝", desc: "返程途中品尝英德特色红茶排骨" },
+            { name: "英德特产采购", desc: "购买英德红茶、麻竹笋等特产作为伴手礼" }
+          ],
+          snacks: [
+            { name: "英德红茶奶茶", shop: "巧克力王国主题餐厅", desc: "用英德红茶制作的奶茶，香醇可口", address: "英德奥园巧克力王国园区内" },
+            { name: "西牛麻竹笋", shop: "英德特产店", desc: "英德特产，红油脆笋、山椒笋片等", address: "英德奥园巧克力王国" },
+            { name: "走地鸡", shop: "清远鸡煲王", desc: "英德走地鸡，肉质紧实", address: "英德市区" }
+          ]
+        }
       }
     ];
 
     let currentDay = 1;
-    let map = null;
-    let markers = [];
+    let detailMap = null;
 
     // 初始化
     function init() {
@@ -2375,14 +2806,7 @@
     function renderParking(parking) {
       if (!parking) return '';
       
-      const typeLabels = {
-        'own': '自有停车场',
-        'nearby': '附近停车场',
-        'free': '免费停车'
-      };
-      
-      const badgeClass = parking.type === 'own' ? 'parking-badge-own' : 
-                         parking.fee.includes('免费') ? 'parking-badge-free' : 'parking-badge-nearby';
+      const badgeClass = parking.type === 'own' ? 'parking-badge-own' : 'parking-badge-nearby';
       
       return `
         <div class="parking-info">
@@ -2397,15 +2821,11 @@
           <div class="parking-name">${parking.name}</div>
           <div class="parking-details">
             <span class="parking-badge ${badgeClass}">${parking.type === 'own' ? '景区/餐厅停车场' : '附近停车场'}</span>
-            ${parking.fee ? `<span class="parking-detail-item">💰 ${parking.fee}</span>` : ''}
-            ${parking.distance ? `<span class="parking-detail-item">📍 ${parking.distance}</span>` : ''}
-            ${parking.capacity ? `<span class="parking-detail-item">🅿️ ${parking.capacity}</span>` : ''}
+            ${parking.fee ? `<span>💰 ${parking.fee}</span>` : ''}
+            ${parking.distance ? `<span>📍 ${parking.distance}</span>` : ''}
           </div>
           ${parking.tips ? `
           <div class="parking-tip">
-            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #6b7280;">
-              <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
-            </svg>
             <span>${parking.tips}</span>
           </div>
           ` : ''}
@@ -2413,79 +2833,40 @@
       `;
     }
 
-    // 初始化地图
-    function initMap(day) {
-      if (map) {
-        map.remove();
-      }
+    // 显示地图弹窗
+    function showMapModal(name, coord, address) {
+      document.getElementById('mapModalTitle').textContent = name;
+      document.getElementById('mapModal').classList.add('active');
       
-      const mapContainer = document.getElementById('map');
-      if (!mapContainer) return;
-      
-      map = L.map('map').setView(day.startCoord, 8);
-      
-      L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', {
-        subdomains: ['1', '2', '3', '4'],
-        maxZoom: 18,
-        attribution: '© 高德地图'
-      }).addTo(map);
-      
-      markers = [];
-      
-      // 添加起点标记
-      const startIcon = L.divIcon({
-        className: 'custom-marker',
-        html: `<div style="width:24px;height:24px;background:#3b82f6;border-radius:50%;border:3px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3);"></div>`,
-        iconSize: [24, 24],
-        iconAnchor: [12, 12]
-      });
-      const startMarker = L.marker(day.startCoord, { icon: startIcon }).addTo(map);
-      startMarker.bindPopup(`<b>起点</b><br>${day.route.from}`);
-      markers.push(startMarker);
-      
-      // 添加终点标记
-      const endIcon = L.divIcon({
-        className: 'custom-marker',
-        html: `<div style="width:24px;height:24px;background:#ef4444;border-radius:50%;border:3px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3);"></div>`,
-        iconSize: [24, 24],
-        iconAnchor: [12, 12]
-      });
-      const endMarker = L.marker(day.endCoord, { icon: endIcon }).addTo(map);
-      endMarker.bindPopup(`<b>终点</b><br>${day.route.to}`);
-      markers.push(endMarker);
-      
-      // 添加路线
-      const routeLine = L.polyline([day.startCoord, day.endCoord], {
-        color: '#f97316',
-        weight: 3,
-        opacity: 0.8,
-        dashArray: '10, 5'
-      }).addTo(map);
-      
-      // 从schedule中添加景点和餐厅标记
-      day.schedule.forEach(item => {
-        if ((item.type === 'attraction' || item.type === 'restaurant') && item.coord) {
-          const color = item.type === 'attraction' ? '#f97316' : '#eab308';
-          const label = item.type === 'attraction' ? '景' : '餐';
-          const icon = L.divIcon({
-            className: 'custom-marker',
-            html: `<div style="width:24px;height:24px;background:${color};border-radius:50%;border:3px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;color:white;font-size:10px;font-weight:bold;">${label}</div>`,
-            iconSize: [24, 24],
-            iconAnchor: [12, 12]
-          });
-          const marker = L.marker(item.coord, { icon: icon }).addTo(map);
-          if (item.type === 'restaurant') {
-            marker.bindPopup(`<b>${item.name}</b><br>${item.meal} · ¥${item.price}/人`);
-          } else {
-            marker.bindPopup(`<b>${item.name}</b><br>${item.time}`);
-          }
-          markers.push(marker);
+      // 延迟初始化地图
+      setTimeout(() => {
+        if (detailMap) {
+          detailMap.remove();
         }
-      });
-      
-      const bounds = L.latLngBounds([day.startCoord, day.endCoord]);
-      markers.forEach(m => bounds.extend(m.getLatLng()));
-      map.fitBounds(bounds, { padding: [30, 30] });
+        
+        detailMap = L.map('detailMap').setView(coord, 15);
+        
+        L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', {
+          subdomains: ['1', '2', '3', '4'],
+          maxZoom: 18,
+          attribution: '© 高德地图'
+        }).addTo(detailMap);
+        
+        // 添加标记
+        const marker = L.marker(coord).addTo(detailMap);
+        marker.bindPopup(`<b>${name}</b><br>${address}`).openPopup();
+      }, 100);
+    }
+
+    // 关闭地图弹窗
+    function closeMapModal(event) {
+      if (!event || event.target === document.getElementById('mapModal')) {
+        document.getElementById('mapModal').classList.remove('active');
+        if (detailMap) {
+          detailMap.remove();
+          detailMap = null;
+        }
+      }
     }
 
     // 渲染内容
@@ -2559,21 +2940,6 @@
         </div>
         ` : ''}
 
-        <!-- Map -->
-        <div class="map-container">
-          <div id="map"></div>
-          <div class="map-legend">
-            <div class="legend-item">
-              <div class="legend-dot legend-attraction"></div>
-              <span>景点</span>
-            </div>
-            <div class="legend-item">
-              <div class="legend-dot legend-restaurant"></div>
-              <span>餐厅</span>
-            </div>
-          </div>
-        </div>
-
         <!-- Backup Plan -->
         ${day.backupPlan ? `
         <div class="backup-card">
@@ -2607,22 +2973,87 @@
           </h3>
           ${sortedSchedule.map((item, index) => renderScheduleItem(item, index, sortedSchedule.length)).join('')}
         </div>
+
+        <!-- Free Time Recommendations -->
+        ${day.freeTimeRecommendations ? `
+        <div class="free-time-card">
+          <div class="free-time-header">
+            <div class="free-time-icon">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+              </svg>
+            </div>
+            <div>
+              <h4 class="free-time-title">空闲时间推荐</h4>
+              <p class="free-time-subtitle">以下是小游玩项目和特色小吃店铺，可根据时间灵活选择</p>
+            </div>
+          </div>
+          
+          ${day.freeTimeRecommendations.attractions && day.freeTimeRecommendations.attractions.length > 0 ? `
+          <div class="free-time-section">
+            <h5 class="free-time-section-title">
+              <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2">
+                <circle cx="12" cy="10" r="3"></circle>
+                <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"></path>
+              </svg>
+              附近小游玩
+            </h5>
+            <div class="free-time-list">
+              ${day.freeTimeRecommendations.attractions.map(item => `
+              <div class="free-time-item">
+                <div class="free-time-item-icon attraction">📍</div>
+                <div class="free-time-item-content">
+                  <div class="free-time-item-name">${item.name}${item.tag ? `<span class="free-time-tag">${item.tag}</span>` : ''}</div>
+                  <div class="free-time-item-desc">${item.desc}</div>
+                </div>
+              </div>
+              `).join('')}
+            </div>
+          </div>
+          ` : ''}
+          
+          ${day.freeTimeRecommendations.snacks && day.freeTimeRecommendations.snacks.length > 0 ? `
+          <div class="free-time-section">
+            <h5 class="free-time-section-title">
+              <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2">
+                <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+                <line x1="6" x2="6" y1="1" y2="4"></line>
+                <line x1="10" x2="10" y1="1" y2="4"></line>
+                <line x1="14" x2="14" y1="1" y2="4"></line>
+              </svg>
+              当地特色小吃店铺
+            </h5>
+            <div class="free-time-list">
+              ${day.freeTimeRecommendations.snacks.map(item => `
+              <div class="free-time-item">
+                <div class="free-time-item-icon food">🍜</div>
+                <div class="free-time-item-content">
+                  <div class="free-time-item-name">${item.name}${item.shop ? ` - ${item.shop}` : ''}</div>
+                  <div class="free-time-item-desc">${item.desc}${item.address ? `<br><small style="color:#3b82f6;">📍 ${item.address}</small>` : ''}</div>
+                </div>
+              </div>
+              `).join('')}
+            </div>
+          </div>
+          ` : ''}
+        </div>
+        ` : ''}
       `;
-      
-      setTimeout(() => initMap(day), 100);
     }
 
     // 渲染行程项
     function renderScheduleItem(item, index, total) {
       const isClickable = item.type === 'attraction' || item.type === 'restaurant';
       const hasImage = item.type === 'attraction' && attractionImages[item.id];
-      const hasDishImage = item.type === 'restaurant' && dishImages[item.dishes?.[0]];
+      const hasDishImage = item.type === 'restaurant' && dishImages[item.recommendDishes?.[0]];
       
       let imageHtml = '';
       if (hasImage) {
         imageHtml = `<img class="schedule-image" src="${attractionImages[item.id]}" alt="${item.name}" onerror="this.src='https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop'">`;
       } else if (hasDishImage) {
-        imageHtml = `<img class="schedule-image" src="${dishImages[item.dishes[0]]}" alt="${item.name}" onerror="this.src='https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=200&h=200&fit=crop'">`;
+        imageHtml = `<img class="schedule-image" src="${dishImages[item.recommendDishes[0]]}" alt="${item.name}" onerror="this.src='https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=200&h=200&fit=crop'">`;
       } else {
         imageHtml = `
           <div class="schedule-icon-wrapper ${getTypeIconClass(item.type)}">
@@ -2657,6 +3088,7 @@
           <div class="schedule-meta">
             <span style="color: #6b7280;">${item.features}</span>
           </div>
+          ${item.address ? `<div class="schedule-meta" style="margin-top:4px;"><small style="color:#3b82f6;">📍 ${item.address}</small></div>` : ''}
         `;
       } else if (item.content) {
         metaHtml = `
@@ -2674,10 +3106,10 @@
       
       // 菜品标签
       let tagsHtml = '';
-      if (item.type === 'restaurant' && item.dishes) {
+      if (item.type === 'restaurant' && item.recommendDishes) {
         tagsHtml = `
           <div class="schedule-tags">
-            ${item.dishes.slice(0, 2).map(d => `<span class="tag tag-outline">${d}</span>`).join('')}
+            ${item.recommendDishes.slice(0, 2).map(d => `<span class="tag tag-outline">${d}</span>`).join('')}
           </div>
         `;
       }
@@ -2770,14 +3202,14 @@
         </div>
         
         <div class="modal-section">
-          <div class="modal-info-card">
+          <div class="modal-info-card" style="cursor: pointer;" onclick="showMapModal('${item.name}', [${item.coord}], '${item.address}')">
             <svg class="modal-info-icon" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2">
               <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path>
               <circle cx="12" cy="10" r="3"></circle>
             </svg>
             <div class="modal-info-content">
-              <div class="modal-info-label">地址</div>
-              <div class="modal-info-value">${item.address}</div>
+              <div class="modal-info-label">📍 地址（点击查看地图）</div>
+              <div class="modal-info-value address-clickable">${item.address}</div>
             </div>
           </div>
           
@@ -2822,7 +3254,7 @@
             </svg>
             <div class="modal-info-content">
               <div class="modal-info-label">🚗 停车信息</div>
-              <div class="modal-info-value">${item.parking.name}<br><small style="color:#6b7280;">${item.parking.fee} · ${item.parking.tips || ''}</small></div>
+              <div class="modal-info-value">${item.parking.name}<br><small style="color:#6b7280;">${item.parking.fee} ${item.parking.tips ? '· ' + item.parking.tips : ''}</small></div>
             </div>
           </div>
           ` : ''}
@@ -2868,16 +3300,34 @@
         ${item.rating} 分
       `;
       
+      // 构建推荐菜图片
+      const dishesHtml = item.recommendDishes ? item.recommendDishes.map(dish => `
+        <div class="dish-item">
+          <img class="dish-image" src="${dishImages[dish] || 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=300&fit=crop'}" 
+               alt="${dish}" onerror="this.src='https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=300&fit=crop'">
+          <div class="dish-name">${dish}</div>
+        </div>
+      `).join('') : '';
+      
       document.getElementById('modalContent').innerHTML = `
+        ${item.dianpingUrl ? `
+        <div class="dianping-badge">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+          </svg>
+          信息来源：大众点评
+        </div>
+        ` : ''}
+        
         <div class="modal-section">
-          <div class="modal-info-card">
+          <div class="modal-info-card" style="cursor: pointer;" onclick="showMapModal('${item.name}', [${item.coord}], '${item.address}')">
             <svg class="modal-info-icon" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2">
               <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path>
               <circle cx="12" cy="10" r="3"></circle>
             </svg>
             <div class="modal-info-content">
-              <div class="modal-info-label">地址</div>
-              <div class="modal-info-value">${item.address}</div>
+              <div class="modal-info-label">📍 地址（点击查看地图）</div>
+              <div class="modal-info-value address-clickable">${item.address}</div>
             </div>
           </div>
           
@@ -2912,24 +3362,33 @@
             </svg>
             <div class="modal-info-content">
               <div class="modal-info-label">🚗 停车信息</div>
-              <div class="modal-info-value">${item.parking.name}<br><small style="color:#6b7280;">${item.parking.fee} · ${item.parking.tips || ''}</small></div>
+              <div class="modal-info-value">${item.parking.name}<br><small style="color:#6b7280;">${item.parking.fee} ${item.parking.tips ? '· ' + item.parking.tips : ''}</small></div>
             </div>
           </div>
           ` : ''}
         </div>
         
+        ${item.recommendDishes ? `
         <div class="modal-section">
-          <h4 class="modal-section-title">特色菜品</h4>
+          <h4 class="modal-section-title">🍽️ 大众点评推荐菜</h4>
           <div class="dishes-gallery">
-            ${item.dishes.map(dish => `
-            <div class="dish-item">
-              <img class="dish-image" src="${dishImages[dish] || 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=300&fit=crop'}" 
-                   alt="${dish}" onerror="this.src='https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=300&fit=crop'">
-              <div class="dish-name">${dish}</div>
-            </div>
-            `).join('')}
+            ${dishesHtml}
           </div>
         </div>
+        ` : ''}
+        
+        ${item.dianpingUrl ? `
+        <div class="modal-section" style="text-align: center;">
+          <a href="${item.dianpingUrl}" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; color: #2563eb; text-decoration: none; font-size: 14px;">
+            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" x2="21" y1="14" y2="3"></line>
+            </svg>
+            在大众点评查看完整信息
+          </a>
+        </div>
+        ` : ''}
       `;
       
       document.getElementById('modalOverlay').classList.add('active');
